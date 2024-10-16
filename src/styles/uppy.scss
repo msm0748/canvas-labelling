@@ -1,0 +1,19 @@
+@import './_variables.scss';
+
+.uppy-Dashboard-AddFiles-title {
+	color: $gray02-color;
+	font-weight: 600;
+	font-size: 18px;
+	padding-top: 73px !important;
+	background-image: url('/images/logo.png');
+	background-repeat: no-repeat;
+	background-position: top center;
+}
+
+[data-uppy-drag-drop-supported='true'] .uppy-Dashboard-AddFiles {
+	border: none;
+}
+
+.uppy-DashboardContent-bar {
+	display: none;
+}

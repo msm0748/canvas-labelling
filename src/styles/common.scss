@@ -1,0 +1,44 @@
+input[type='text'],
+input[type='password'],
+input[type='email'],
+textarea {
+	border: 1px solid #caccd6;
+	width: 100%;
+	border-radius: 3px;
+	height: 47px;
+}
+
+.blind {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.modal-title {
+	font-size: 20px;
+	font-weight: 700;
+	text-align: center;
+}
+
+.main-section {
+	h2 {
+		font-size: 46px;
+		font-weight: bold;
+		line-height: 1.3;
+
+		span {
+			color: $primary-color;
+		}
+	}
+
+	.description {
+		font-size: 18px;
+		color: $gray01-color;
+		line-height: 1.4;
+	}
+}

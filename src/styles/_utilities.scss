@@ -1,0 +1,14 @@
+@mixin wrap() {
+	max-width: 1180px;
+	margin: 0 auto;
+}
+
+@mixin paddedWrap() {
+	max-width: 1780px;
+	margin: 0 auto;
+
+	// @media (min-width: 1920px) {
+	// 	padding: 0 70px;
+	// 	max-width: 100%;
+	// }
+}
