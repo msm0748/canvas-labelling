@@ -17,13 +17,7 @@ import type {
 	Tool
 } from '$types/canvas';
 import { writable } from 'svelte/store';
-import {
-	createHistory,
-	createSam,
-	createSamHistory,
-	createScale,
-	createSelectedElement
-} from './create';
+import { createHistory, createScale, createSelectedElement } from './create';
 
 export const canvasStore = {
 	canvasSize: writable<Size>(INITIAL_SIZE),
@@ -39,9 +33,7 @@ export const canvasStore = {
 	resizePoint: writable<number>(INITIAL_RESIZE_POINT),
 	mouseCursorStyle: writable<MouseCursorStyle>('default'),
 	history: createHistory<Shape>(),
-	elements: writable<Shape[]>([]),
-	samHistory: createSamHistory(),
-	sam: createSam()
+	elements: writable<Shape[]>([])
 };
 
 export const resetCanvasStore = () => {

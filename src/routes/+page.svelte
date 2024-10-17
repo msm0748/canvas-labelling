@@ -7,7 +7,7 @@
 
 	setContext('label', 'rectangle');
 
-	$: imageSrc = 'https://cdn-icons-png.flaticon.com/512/3179/3179575.png';
+	const imageSrc = 'https://cdn-icons-png.flaticon.com/512/3179/3179575.png';
 
 	let keyboardManager: KeyboardManager;
 
@@ -22,6 +22,4 @@
 	});
 </script>
 
-{#if imageSrc}
-	<Canvas {imageSrc} brightness={100} contrast={100}></Canvas>
-{/if}
+<Canvas {imageSrc} brightness={100} contrast={100}></Canvas>

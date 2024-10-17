@@ -93,9 +93,12 @@ export class RectangleManager extends AbstractShapeManager {
 		this.selectedElement.unselect();
 		const { name, color } = get(this.selectedClass);
 		const element = new Rectangle();
+
 		element.init(name, color);
 		element.create(offsetX, offsetY);
+
 		this.history.setState([...get(this.elements), element]);
+
 		this.action.set('drawing');
 	}
 
