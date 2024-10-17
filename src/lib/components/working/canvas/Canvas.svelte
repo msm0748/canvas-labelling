@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { adjustImageToCanvas } from '$lib/utils/canvas/common/adjustImageToCanvas';
 	import { canvasStore } from '$stores/canvas';
+	import Controller from '$lib/utils/canvas/Controller';
 
 	export let imageSrc: string;
 	export let brightness: number;
@@ -12,6 +13,8 @@
 	let ctx: CanvasRenderingContext2D | null;
 	let size = INITIAL_SIZE;
 	let canvasController: HTMLDivElement;
+
+	let controller: Controller;
 
 	let { imageInfo } = canvasStore;
 
@@ -46,13 +49,20 @@
 
 	onMount(() => {
 		ctx = canvas.getContext('2d');
+		if (!ctx) return;
+
+		controller = new Controller(ctx);
 
 		const image = new Image();
 		image.src = imageSrc;
 
 		image.onload = () => {
 			setImage(image);
-			imageDraw();
+			// imageDraw();
+
+			controller.animateDraw();
+
+			// new Controller(canvas);
 		};
 	});
 </script>
@@ -63,6 +73,10 @@
 	bind:this={canvasController}
 	bind:offsetWidth={size.width}
 	bind:offsetHeight={size.height}
+	on:mousedown={controller.onMouseDown}
+	on:mousemove={controller.onMouseMove}
+	on:mouseup={controller.onMouseUp}
+	on:wheel={controller.onMouseWheel}
 	tabindex="0"
 	role="button"
 	aria-pressed="false"

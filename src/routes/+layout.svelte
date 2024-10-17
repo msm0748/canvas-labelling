@@ -35,9 +35,7 @@
 </script>
 
 <div class="app">
-	<Header title="Annotate" projectTitle="프로젝트 제목" projectId={'project.documents.id'}
-		>컨텐츠 버튼들</Header
-	>
+	<Header />
 	<main>
 		<div class="wrap">
 			<Sidebar />
