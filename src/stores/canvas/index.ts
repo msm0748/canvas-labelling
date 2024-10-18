@@ -1,6 +1,7 @@
 import type { ImageInfo } from '$types/canvas';
 import { writable } from 'svelte/store';
 import {
+	createElements,
 	createScale,
 	createSelectedClass,
 	createSelectedElement,
@@ -14,5 +15,6 @@ export const canvasStore = {
 	viewPos: createViewPos(),
 	selectedElement: createSelectedElement(),
 	selectedClass: createSelectedClass(),
-	selectedTool: createSelectedTool()
+	selectedTool: createSelectedTool(),
+	elements: createElements()
 };

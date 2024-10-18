@@ -1,11 +1,13 @@
 import {
 	INITIAL_POSITION,
 	INITIAL_SCALE,
+	INITIAL_SELECTED_TOOL,
 	MAX_SCALE,
 	MIN_SCALE,
 	ZOOM_SENSITIVITY
 } from '$lib/constants/canvas';
 import type { Point, Position, SelectedClass, Shape, Tool } from '$types/canvas';
+import _ from 'lodash';
 import { writable } from 'svelte/store';
 
 export const createSelectedElement = () => {
@@ -47,6 +49,27 @@ export const createSelectedElement = () => {
 	};
 };
 
+export const createElements = () => {
+	const { subscribe, set, update } = writable<Shape[]>([]);
+
+	const add = (element: Shape) => {
+		update((elements) => [...elements, element]);
+	};
+
+	const remove = (element: Shape) => {
+		update((elements) => elements.filter((el) => el !== element));
+	};
+
+	const reset = () => set([]);
+
+	return {
+		subscribe,
+		add,
+		remove,
+		reset
+	};
+};
+
 export const createViewPos = () => {
 	const { subscribe, set, update } = writable<Position>(INITIAL_POSITION);
 
@@ -62,10 +85,13 @@ export const createViewPos = () => {
 			x: adjustedX,
 			y: adjustedY
 		});
+
+	const reset = () => set(INITIAL_POSITION);
 	return {
 		subscribe,
 		move,
-		zoom
+		zoom,
+		reset
 	};
 };
 
@@ -84,15 +110,18 @@ export const createSelectedClass = () => {
 };
 
 export const createSelectedTool = () => {
-	const { subscribe, set } = writable<Tool>('select');
+	const { subscribe, set } = writable<Tool>(INITIAL_SELECTED_TOOL);
 
 	const select = (tool: Tool) => {
 		set(tool);
 	};
 
+	const reset = () => set(INITIAL_SELECTED_TOOL);
+
 	return {
 		subscribe,
-		select
+		select,
+		reset
 	};
 };
 

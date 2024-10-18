@@ -6,6 +6,7 @@ export default abstract class AbstractShapeManager {
 	public action: Action = 'none';
 	public $selectedClass = canvasStore.selectedClass;
 	public $selectedTool = canvasStore.selectedTool;
+	public $elements = canvasStore.elements;
 
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;

@@ -1,11 +1,8 @@
-import { get, type Writable } from 'svelte/store';
+import { get } from 'svelte/store';
 import { Rectangle } from './Rectangle';
-import { canvasStore } from '$stores/canvas';
 import AbstractShapeManager from '../../abstract/AbstractShapeManager';
 
 export class RectangleManager extends AbstractShapeManager {
-	private elements: Rectangle[] = [];
-
 	constructor(ctx: CanvasRenderingContext2D) {
 		super(ctx);
 	}
@@ -31,7 +28,7 @@ export class RectangleManager extends AbstractShapeManager {
 		element.init(name, color);
 		element.create(offsetX, offsetY);
 
-		this.elements = [...this.elements, element];
+		this.$elements.add(element);
 
 		this.action = 'drawing';
 	}
@@ -51,10 +48,12 @@ export class RectangleManager extends AbstractShapeManager {
 	}
 
 	onMouseMove(offsetX: number, offsetY: number) {
+		const $elements = get(this.$elements);
+
 		switch (this.action) {
 			case 'drawing':
 				{
-					const element = this.elements[this.elements.length - 1];
+					const element = $elements[$elements.length - 1];
 					element.update(offsetX, offsetY);
 				}
 				break;
@@ -65,10 +64,12 @@ export class RectangleManager extends AbstractShapeManager {
 	}
 
 	onMouseUp(offsetX: number, offsetY: number) {
+		const $elements = get(this.$elements);
+
 		switch (this.action) {
 			case 'drawing':
 				{
-					const element = this.elements[this.elements.length - 1];
+					const element = $elements[$elements.length - 1];
 					const { points } = element;
 
 					const [{ x: sX, y: sY }, { x: cX, y: cY }] = points;
@@ -90,6 +91,8 @@ export class RectangleManager extends AbstractShapeManager {
 	}
 
 	public draw() {
-		this.elements.forEach((element) => element.draw(this.ctx));
+		const $elements = get(this.$elements);
+
+		$elements.forEach((element) => element.draw(this.ctx));
 	}
 }
