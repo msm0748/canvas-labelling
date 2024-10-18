@@ -1,4 +1,3 @@
-import { get } from 'svelte/store';
 import { canvasStore } from '$stores/canvas';
 import type { Point, RectanglePosition } from '$types/canvas';
 import { v4 as uuidv4 } from 'uuid';

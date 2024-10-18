@@ -28,7 +28,6 @@ export class RectangleManager extends AbstractShapeManager {
 		element.create(offsetX, offsetY);
 
 		this.$elements.set([...get(this.$elements), element]);
-		this.$selectedElement.set(element);
 		this.action = 'drawing';
 	}
 
@@ -105,12 +104,21 @@ export class RectangleManager extends AbstractShapeManager {
 				}
 				break;
 
+			case 'updating':
+				{
+					const selectedElement = get(this.$selectedElement);
+					if (!selectedElement) return;
+
+					selectedElement.resizing(offsetX, offsetY);
+				}
+				break;
+
 			default:
 				break;
 		}
 	}
 
-	onMouseUp(offsetX: number, offsetY: number) {
+	onMouseUp() {
 		const $elements = get(this.$elements);
 
 		switch (this.action) {
@@ -127,7 +135,22 @@ export class RectangleManager extends AbstractShapeManager {
 
 					if (Math.abs(sX - cX) < 5 || Math.abs(sY - cY) < 5) return;
 				}
+				break;
 
+			case 'moving':
+			case 'updating':
+				{
+					const selectedElement = get(this.$selectedElement);
+					if (!selectedElement) return;
+
+					const { points } = selectedElement;
+					const [{ x: sX, y: sY }, { x: cX, y: cY }] = points;
+
+					const { minX, minY, maxX, maxY } = this.clamp(sX, sY, cX, cY);
+
+					selectedElement.points[0] = { x: minX, y: minY };
+					selectedElement.points[1] = { x: maxX, y: maxY };
+				}
 				break;
 
 			default:
