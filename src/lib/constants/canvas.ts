@@ -23,12 +23,12 @@ export const INITIAL_SELECTED_TOOL: Tool = 'select';
 export const INITIAL_ACTION: Action = 'none';
 
 // 캔버스에서 라벨링 할 때 리사이즈 초기 포인트 두께
-export const INITIAL_RESIZE_POINT = 10;
+export const INITIAL_RESIZE_POINT = 8;
 
 // 캔버스에서 라벨링 할 때 초기 선 두께
 export const INITIAL_LINE_WIDTH = 2;
 
-export const INITIAL_CLASS_SELECTOR: SelectedClass = { name: '', color: '' };
+// export const INITIAL_CLASS_SELECTOR: SelectedClass = { name: '', color: '' };
 
 export const INITIAL_HISTORY = {
 	index: 0,

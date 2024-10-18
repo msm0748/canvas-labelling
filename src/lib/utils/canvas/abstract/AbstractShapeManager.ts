@@ -1,17 +1,21 @@
-import type { Position } from '$types/canvas';
+import { canvasStore } from '$stores/canvas';
+import type { Action, Position } from '$types/canvas';
 
-export default abstract class ShapeManager {
-	protected ctx: CanvasRenderingContext2D;
+export default abstract class AbstractShapeManager {
+	public ctx: CanvasRenderingContext2D;
+	public action: Action = 'none';
+	public $selectedClass = canvasStore.selectedClass;
+	public $selectedTool = canvasStore.selectedTool;
 
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
 	}
 
-	protected abstract createElement(offsetX: number, offsetY: number): void;
-	protected abstract selectElement(offsetX: number, offsetY: number): void;
-	abstract handleMouseDown(offsetX: number, offsetY: number): void;
-	abstract handleMouseMove(offsetX: number, offsetY: number): void;
-	abstract handleMouseUp(offsetX: number, offsetY: number): void;
+	abstract createElement(offsetX: number, offsetY: number): void;
+	abstract selectElement(offsetX: number, offsetY: number): void;
+	abstract onMouseDown(offsetX: number, offsetY: number): void;
+	abstract onMouseMove(offsetX: number, offsetY: number): void;
+	abstract onMouseUp(offsetX: number, offsetY: number): void;
 
 	/**
 	 * @param {Position | null} relativeMousePos - 폴리곤을 그리는 동안 마우스의 현재 위치를 사용하여 선을 연결하기 위한 좌표,

@@ -1,12 +1,13 @@
 import { get } from 'svelte/store';
 import type { RectanglePosition } from '$types/canvas';
-import Shape from '../../abstract/AbstractShape';
+import AbstractShape from '../../abstract/AbstractShape';
 import {
 	adjustOffsetWithinImageBounds,
 	getConstrainedRectanglePoints
 } from '../../common/constrainedShapePoints';
+import { INITIAL_LINE_WIDTH, INITIAL_RESIZE_POINT } from '$lib/constants/canvas';
 
-export class Rectangle extends Shape {
+export class Rectangle extends AbstractShape {
 	constructor() {
 		super('rectangle');
 		this.isComplete = true;
@@ -21,7 +22,7 @@ export class Rectangle extends Shape {
 	}
 
 	/** Rectangle 생성할 때 업데이트 해주는 함수 */
-	public updateCornerPoint(cX: number, cY: number) {
+	public update(cX: number, cY: number) {
 		const { adjustedOffsetX, adjustedOffsetY } = adjustOffsetWithinImageBounds(cX, cY);
 		this.points[1] = { x: adjustedOffsetX, y: adjustedOffsetY };
 	}
@@ -177,13 +178,10 @@ export class Rectangle extends Shape {
 
 	/** 꼭짓점 포인트 사각형을 그리기 */
 	public drawPointRectangles(ctx: CanvasRenderingContext2D) {
-		const selectedElement = get(this.selectedElement);
-		if (selectedElement?.id !== this.id) return;
-
-		const resizePoint = this.resizePoint;
-
-		ctx.strokeStyle = 'black';
+		ctx.strokeStyle = this.color;
 		ctx.fillStyle = 'white';
+		ctx.lineWidth = INITIAL_LINE_WIDTH; // border 굵기 2px 설정
+		console.log(ctx.lineWidth);
 		const [{ x: sX, y: sY }, { x: cX, y: cY }] = this.points;
 
 		const points = [
@@ -194,14 +192,18 @@ export class Rectangle extends Shape {
 		];
 
 		points.forEach(([x, y]) => {
-			ctx.strokeRect(x - resizePoint / 2, y - resizePoint / 2, resizePoint, resizePoint);
-			ctx.fillRect(x - resizePoint / 2, y - resizePoint / 2, resizePoint, resizePoint);
+			ctx.beginPath();
+			ctx.arc(x, y, this.resizePoint / 2, 0, Math.PI * 2); // 원 그리기
+			ctx.fill();
+			ctx.stroke();
+			ctx.closePath();
 		});
 	}
 
 	public draw(ctx: CanvasRenderingContext2D) {
-		this.resizePoint = 10 / get(this.scale);
-		ctx.lineWidth = 2 / get(this.scale);
+		// 확대 축소시 선 굵기와 포인트 크기를 일정하게 조정
+		this.resizePoint = INITIAL_RESIZE_POINT / get(this.$scale);
+		ctx.lineWidth = INITIAL_LINE_WIDTH / get(this.$scale);
 
 		const { x: sX, y: sY } = this.points[0];
 		const { x: cX, y: cY } = this.points[1];
@@ -210,11 +212,9 @@ export class Rectangle extends Shape {
 		ctx.strokeStyle = this.color;
 		ctx.strokeRect(sX, sY, width, height);
 
-		if (get(this.applyHoverEffectById) === this.id && get(this.selectedElement)?.id !== this.id) {
-			ctx.fillStyle = this.color;
-			ctx.globalAlpha = 0.3;
-			ctx.fillRect(sX, sY, width, height);
-		}
+		ctx.fillStyle = this.color;
+		ctx.globalAlpha = 0.3;
+		ctx.fillRect(sX, sY, width, height);
 		ctx.globalAlpha = 1;
 
 		this.drawPointRectangles(ctx);

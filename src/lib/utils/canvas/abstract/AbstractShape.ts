@@ -4,7 +4,7 @@ import type { Point, RectanglePosition } from '$types/canvas';
 import { v4 as uuidv4 } from 'uuid';
 import { INITIAL_RESIZE_POINT } from '$lib/constants/canvas';
 
-export default abstract class Shape {
+export default abstract class AbstractShape {
 	public id: string;
 	public type: string;
 	public label: string;
@@ -13,13 +13,8 @@ export default abstract class Shape {
 	public isComplete: boolean;
 	public resizePoint = INITIAL_RESIZE_POINT;
 
-	private _scale = canvasStore.scale;
-
-	public get scale() {
-		return get(this._scale);
-	}
-
-	// selectedElement = canvasStore.selectedElement; // 전역
+	public $selectedElement = canvasStore.selectedElement; // 전역
+	public $scale = canvasStore.scale; // 전역
 
 	/** 객체의 어느 위치를 수정할지 나타내는 변수 */
 	public position: number | RectanglePosition | null = null;

@@ -69,6 +69,7 @@ export type MouseCursorStyle =
 	| 'zoom-out';
 
 export interface SelectedClass {
+	id: number;
 	name: string;
 	color: string;
 }

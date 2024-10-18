@@ -4,7 +4,7 @@
 
 	setContext('label', 'rectangle');
 
-	const imageSrc = 'https://cdn-icons-png.flaticon.com/512/3179/3179575.png';
+	const imageSrc = '/test.png';
 </script>
 
 <Canvas {imageSrc} brightness={100} contrast={100}></Canvas>

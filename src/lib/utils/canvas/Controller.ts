@@ -2,29 +2,35 @@ import { get } from 'svelte/store';
 import ImageManager from './ImageManager';
 import ScaleManager from './ScaleManager';
 import { canvasStore } from '$stores/canvas';
+import { RectangleManager } from './shape/rectangle/RectangleManager';
 
 export default class Controller {
 	public ctx: CanvasRenderingContext2D;
 	private animationFrameId: number | null = null;
 	private scaleManager: ScaleManager; // ScaleManager의 인스턴스를 속성으로 저장
 	private imageManager: ImageManager;
+	private rectangleManager: RectangleManager;
 
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
 		this.scaleManager = new ScaleManager(); // 생성자에서 인스턴스를 생성
 		this.imageManager = new ImageManager();
+		this.rectangleManager = new RectangleManager(ctx);
 	}
 
 	public onMouseDown = (e: MouseEvent) => {
-		console.log('마우스 다운');
+		const { offsetX, offsetY } = e;
+		this.rectangleManager.onMouseDown(offsetX, offsetY);
 	};
 
 	public onMouseMove = (e: MouseEvent) => {
-		console.log('마우스 무브');
+		const { offsetX, offsetY } = e;
+		this.rectangleManager.onMouseMove(offsetX, offsetY);
 	};
 
 	public onMouseUp = (e: MouseEvent) => {
-		console.log('마우스 업');
+		const { offsetX, offsetY } = e;
+		this.rectangleManager.onMouseUp(offsetX, offsetY);
 	};
 
 	public onMouseWheel = (e: WheelEvent) => {
@@ -48,6 +54,7 @@ export default class Controller {
 		this.clearRect();
 		this.setTransform();
 		this.imageManager.draw(this.ctx);
+		this.rectangleManager.draw();
 	};
 
 	public animateDraw = () => {
