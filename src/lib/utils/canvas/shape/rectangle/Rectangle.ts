@@ -180,7 +180,7 @@ export class Rectangle extends AbstractShape {
 	public drawPoint(ctx: CanvasRenderingContext2D) {
 		ctx.strokeStyle = this.color;
 		ctx.fillStyle = 'white';
-		ctx.lineWidth = INITIAL_LINE_WIDTH;
+		ctx.lineWidth = INITIAL_LINE_WIDTH / get(this.$scale);
 
 		const [{ x: sX, y: sY }, { x: cX, y: cY }] = this.points;
 

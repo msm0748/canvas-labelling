@@ -3,6 +3,7 @@ import ImageManager from './ImageManager';
 import ScaleManager from './ScaleManager';
 import { canvasStore } from '$stores/canvas';
 import { RectangleManager } from './shape/rectangle/RectangleManager';
+import { relativeMousePos } from './common/mousePositionCalculator';
 
 export default class Controller {
 	public ctx: CanvasRenderingContext2D;
@@ -20,17 +21,24 @@ export default class Controller {
 
 	public onMouseDown = (e: MouseEvent) => {
 		const { offsetX, offsetY } = e;
-		this.rectangleManager.onMouseDown(offsetX, offsetY);
+		const { x, y } = relativeMousePos(offsetX, offsetY);
+
+		// 왼쪽 마웃드 클릭시에만
+		if (e.button === 0) {
+			this.rectangleManager.onMouseDown(x, y);
+		}
 	};
 
 	public onMouseMove = (e: MouseEvent) => {
 		const { offsetX, offsetY } = e;
-		this.rectangleManager.onMouseMove(offsetX, offsetY);
+		const { x, y } = relativeMousePos(offsetX, offsetY);
+		this.rectangleManager.onMouseMove(x, y);
 	};
 
 	public onMouseUp = (e: MouseEvent) => {
 		const { offsetX, offsetY } = e;
-		this.rectangleManager.onMouseUp(offsetX, offsetY);
+		const { x, y } = relativeMousePos(offsetX, offsetY);
+		this.rectangleManager.onMouseUp(x, y);
 	};
 
 	public onMouseWheel = (e: WheelEvent) => {

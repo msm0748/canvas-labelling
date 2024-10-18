@@ -31,7 +31,7 @@ export class RectangleManager extends AbstractShapeManager {
 		element.init(name, color);
 		element.create(offsetX, offsetY);
 
-		this.elements.push(element);
+		this.elements = [...this.elements, element];
 
 		this.action = 'drawing';
 	}

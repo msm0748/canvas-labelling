@@ -76,6 +76,7 @@
 	on:mousedown={controller.onMouseDown}
 	on:mousemove={controller.onMouseMove}
 	on:mouseup={controller.onMouseUp}
+	on:contextmenu|preventDefault
 	on:wheel={controller.onMouseWheel}
 	tabindex="0"
 	role="button"
