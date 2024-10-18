@@ -6,67 +6,32 @@ import {
 	MIN_SCALE,
 	ZOOM_SENSITIVITY
 } from '$lib/constants/canvas';
-import type { Point, Position, SelectedClass, Shape, Tool } from '$types/canvas';
-import _ from 'lodash';
+import type { Position, SelectedClass, Shape, Tool } from '$types/canvas';
 import { writable } from 'svelte/store';
 
 export const createSelectedElement = () => {
 	const { subscribe, update, set } = writable<Shape | null>(null);
 
-	const select = (element: Shape) => {
-		set(element);
-	};
-
-	const updatePoints = (newPoints: Point[]) => {
-		update((selectedElement) => {
-			if (selectedElement) {
-				selectedElement.points = newPoints;
-			}
-			return selectedElement;
-		});
-	};
-
-	const updateClass = (name: string, color: string) => {
-		update((selectedElement) => {
-			if (selectedElement) {
-				selectedElement.label = name;
-				selectedElement.color = color;
-			}
-			return selectedElement;
-		});
-	};
-
-	const unselect = () => {
-		set(null);
-	};
+	const reset = () => set(null);
 
 	return {
 		subscribe,
-		select,
-		updatePoints,
-		updateClass,
-		unselect
+		set,
+		reset,
+		update
 	};
 };
 
 export const createElements = () => {
 	const { subscribe, set, update } = writable<Shape[]>([]);
 
-	const add = (element: Shape) => {
-		update((elements) => [...elements, element]);
-	};
-
-	const remove = (element: Shape) => {
-		update((elements) => elements.filter((el) => el !== element));
-	};
-
 	const reset = () => set([]);
 
 	return {
 		subscribe,
-		add,
-		remove,
-		reset
+		set,
+		reset,
+		update
 	};
 };
 

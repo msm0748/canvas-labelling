@@ -21,15 +21,14 @@ export class RectangleManager extends AbstractShapeManager {
 	}
 
 	createElement(offsetX: number, offsetY: number) {
-		// 마우스 우클릭 시 라벨 생성 방지
 		const { name, color } = get(this.$selectedClass);
 		const element = new Rectangle();
 
 		element.init(name, color);
 		element.create(offsetX, offsetY);
 
-		this.$elements.add(element);
-		this.$selectedElement.select(element);
+		this.$elements.set([...get(this.$elements), element]);
+		this.$selectedElement.set(element);
 		this.action = 'drawing';
 	}
 
@@ -47,7 +46,7 @@ export class RectangleManager extends AbstractShapeManager {
 				const dragOffsets = element.calculateDragOffsets(offsetX, offsetY, 'inside');
 
 				element.setDragOffsets(dragOffsets.dragOffsetX, dragOffsets.dragOffsetY, 'inside');
-				this.$selectedElement.select(element);
+				this.$selectedElement.set(element);
 				this.action = 'moving';
 				return;
 			} else {
@@ -58,7 +57,7 @@ export class RectangleManager extends AbstractShapeManager {
 					dragOffsets.dragOffsetY,
 					dragOffsets.position
 				);
-				this.$selectedElement.select(element);
+				this.$selectedElement.set(element);
 
 				this.action = selectedElement.position === 'inside' ? 'moving' : 'updating';
 
@@ -66,7 +65,7 @@ export class RectangleManager extends AbstractShapeManager {
 			}
 		}
 
-		this.$selectedElement.unselect();
+		this.$selectedElement.set(null);
 		this.action = 'none';
 	}
 
@@ -119,7 +118,6 @@ export class RectangleManager extends AbstractShapeManager {
 				{
 					const element = $elements[$elements.length - 1];
 					const { points } = element;
-
 					const [{ x: sX, y: sY }, { x: cX, y: cY }] = points;
 
 					const { minX, minY, maxX, maxY } = this.clamp(sX, sY, cX, cY);
