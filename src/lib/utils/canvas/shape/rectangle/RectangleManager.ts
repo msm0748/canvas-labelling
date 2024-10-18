@@ -33,7 +33,42 @@ export class RectangleManager extends AbstractShapeManager {
 		this.action = 'drawing';
 	}
 
-	selectElement(offsetX: number, offsetY: number) {}
+	selectElement(offsetX: number, offsetY: number) {
+		// 마지막에 추가된 Rect부터 선택하기 위해 reverse
+		const elements = [...get(this.$elements)].reverse();
+		const selectedElement = get(this.$selectedElement);
+
+		for (const element of elements) {
+			const position = element.positionWithinElement(offsetX, offsetY);
+			if (!position) continue;
+
+			// 선택된 Rect만 updating(resizing) 되도록 하고 선택 안된 Rect는 move만 되도록 하는 로직
+			if (selectedElement?.id !== element.id) {
+				const dragOffsets = element.calculateDragOffsets(offsetX, offsetY, 'inside');
+
+				element.setDragOffsets(dragOffsets.dragOffsetX, dragOffsets.dragOffsetY, 'inside');
+				this.$selectedElement.select(element);
+				this.action = 'moving';
+				return;
+			} else {
+				const dragOffsets = element.calculateDragOffsets(offsetX, offsetY, position);
+
+				element.setDragOffsets(
+					dragOffsets.dragOffsetX,
+					dragOffsets.dragOffsetY,
+					dragOffsets.position
+				);
+				this.$selectedElement.select(element);
+
+				this.action = selectedElement.position === 'inside' ? 'moving' : 'updating';
+
+				return;
+			}
+		}
+
+		this.$selectedElement.unselect();
+		this.action = 'none';
+	}
 
 	onMouseDown(offsetX: number, offsetY: number) {
 		switch (get(this.$selectedTool)) {
@@ -42,6 +77,11 @@ export class RectangleManager extends AbstractShapeManager {
 					this.createElement(offsetX, offsetY);
 				}
 				break;
+
+			case 'select':
+				this.selectElement(offsetX, offsetY);
+				break;
+
 			default:
 				break;
 		}
@@ -55,6 +95,14 @@ export class RectangleManager extends AbstractShapeManager {
 				{
 					const element = $elements[$elements.length - 1];
 					element.update(offsetX, offsetY);
+				}
+				break;
+
+			case 'moving':
+				{
+					const selectedElement = get(this.$selectedElement);
+					if (!selectedElement) return;
+					selectedElement.move(offsetX, offsetY);
 				}
 				break;
 
