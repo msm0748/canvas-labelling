@@ -84,7 +84,7 @@ export const createSelectedClass = () => {
 };
 
 export const createSelectedTool = () => {
-	const { subscribe, set } = writable<Tool>('rectangle');
+	const { subscribe, set } = writable<Tool>('select');
 
 	const select = (tool: Tool) => {
 		set(tool);

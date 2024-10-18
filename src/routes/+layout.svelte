@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '$styles/main.scss';
-	import Header from '$lib/components/working/Header.svelte';
+	import Header from '$lib/components/working/header/Header.svelte';
 	import Sidebar from '$lib/components/working/sidebar/Sidebar.svelte';
 	import { setContext } from 'svelte';
 

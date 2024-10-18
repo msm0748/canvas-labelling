@@ -176,12 +176,12 @@ export class Rectangle extends AbstractShape {
 		return position;
 	}
 
-	/** 꼭짓점 포인트 사각형을 그리기 */
-	public drawPointRectangles(ctx: CanvasRenderingContext2D) {
+	/** 꼭짓점 포인트 그리기 */
+	public drawPoint(ctx: CanvasRenderingContext2D) {
 		ctx.strokeStyle = this.color;
 		ctx.fillStyle = 'white';
-		ctx.lineWidth = INITIAL_LINE_WIDTH; // border 굵기 2px 설정
-		console.log(ctx.lineWidth);
+		ctx.lineWidth = INITIAL_LINE_WIDTH;
+
 		const [{ x: sX, y: sY }, { x: cX, y: cY }] = this.points;
 
 		const points = [
@@ -213,10 +213,10 @@ export class Rectangle extends AbstractShape {
 		ctx.strokeRect(sX, sY, width, height);
 
 		ctx.fillStyle = this.color;
-		ctx.globalAlpha = 0.3;
+		ctx.globalAlpha = 0.4; // 투명도
 		ctx.fillRect(sX, sY, width, height);
 		ctx.globalAlpha = 1;
 
-		this.drawPointRectangles(ctx);
+		this.drawPoint(ctx);
 	}
 }
