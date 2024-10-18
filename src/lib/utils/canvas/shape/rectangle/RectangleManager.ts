@@ -29,7 +29,7 @@ export class RectangleManager extends AbstractShapeManager {
 		element.create(offsetX, offsetY);
 
 		this.$elements.add(element);
-
+		this.$selectedElement.select(element);
 		this.action = 'drawing';
 	}
 

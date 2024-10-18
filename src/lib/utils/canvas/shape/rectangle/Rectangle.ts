@@ -178,6 +178,9 @@ export class Rectangle extends AbstractShape {
 
 	/** 꼭짓점 포인트 그리기 */
 	public drawPoint(ctx: CanvasRenderingContext2D) {
+		const selectedElement = get(this.$selectedElement);
+		if (selectedElement?.id !== this.id) return;
+
 		ctx.strokeStyle = this.color;
 		ctx.fillStyle = 'white';
 		ctx.lineWidth = INITIAL_LINE_WIDTH / get(this.$scale);

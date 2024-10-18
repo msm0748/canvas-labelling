@@ -13,7 +13,7 @@ export default abstract class AbstractShape {
 	public isComplete: boolean;
 	public resizePoint = INITIAL_RESIZE_POINT;
 
-	public $selectedElement = canvasStore.selectedElement; // 전역
+	public $selectedElement = canvasStore.selectedElement;
 	public $scale = canvasStore.scale; // 전역
 
 	/** 객체의 어느 위치를 수정할지 나타내는 변수 */
