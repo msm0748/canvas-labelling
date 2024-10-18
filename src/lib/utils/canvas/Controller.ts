@@ -50,12 +50,12 @@ export default class Controller {
 		this.imageManager.draw(this.ctx);
 	};
 
-	animateDraw = () => {
+	public animateDraw = () => {
 		this.draw();
 		this.animationFrameId = requestAnimationFrame(this.animateDraw);
 	};
 
-	stopAnimation = () => {
+	public stopAnimation = () => {
 		if (this.animationFrameId) {
 			cancelAnimationFrame(this.animationFrameId);
 			this.animationFrameId = null;

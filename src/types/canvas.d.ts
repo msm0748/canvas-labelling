@@ -1,6 +1,4 @@
-import type { FeaturePoint } from '$lib/utils/canvas/featurePoint/FeaturePoint';
-import type { Polygon } from '$lib/utils/canvas/polygon/Polygon';
-import type { Rectangle } from '$lib/utils/canvas/rectangle/Rectangle';
+import type { Rectangle } from '$lib/utils/canvas/shape/rectangle/Rectangle';
 
 export interface Size {
 	width: number;
@@ -30,7 +28,6 @@ export interface ImageInfo {
 	originalHeight: number;
 }
 
-export type Zoom = 'zoomIn' | 'zoomOut' | 'reset';
 export type Action =
 	| 'none'
 	| 'moving'
@@ -98,7 +95,8 @@ export type SamHistory = {
 	history: SamPoint[][];
 };
 
-export type Shape = Rectangle | FeaturePoint | Polygon;
+// export type Shape = Rectangle | FeaturePoint | Polygon;
+export type Shape = Rectangle;
 
 export interface HistoryStore<T> {
 	index: number;

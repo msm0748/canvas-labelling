@@ -28,6 +28,7 @@ export const adjustOffsetWithinImageBounds = (offsetX: number, offsetY: number) 
 	return { adjustedOffsetX: offsetX, adjustedOffsetY: offsetY };
 };
 
+/**  */
 const getShapeBounds = () => {
 	const imageInfo = get(canvasStore.imageInfo);
 
