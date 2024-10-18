@@ -6,7 +6,8 @@ import {
 	ZOOM_SENSITIVITY
 } from '$lib/constants/canvas';
 import type { Position, Shape } from '$types/canvas';
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
+import { canvasStore } from '.';
 
 // export const createSelectedElement = () => {
 // 	const { subscribe, update, set } = writable<Shape | null>(null);
@@ -57,11 +58,17 @@ export const createViewPos = () => {
 		}));
 	};
 
-	const zoom = (x: number, y: number) => set({ x, y });
+	const zoom = (adjustedX: number, adjustedY: number) => {
+		set({
+			x: adjustedX,
+			y: adjustedY
+		});
+	};
 
 	return {
 		subscribe,
-		move
+		move,
+		zoom
 	};
 };
 

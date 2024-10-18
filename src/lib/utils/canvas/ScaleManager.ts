@@ -15,10 +15,10 @@ export default class ScaleManager {
 			this.$scale.zoomOut();
 		}
 
-		this.$viewPos.set({
-			x: offsetX - xs * get(this.$scale),
-			y: offsetY - ys * get(this.$scale)
-		});
+		const adjustedX = offsetX - xs * get(this.$scale);
+		const adjustedY = offsetY - ys * get(this.$scale);
+
+		this.$viewPos.zoom(adjustedX, adjustedY);
 	}
 
 	private move(deltaX: number, deltaY: number) {
