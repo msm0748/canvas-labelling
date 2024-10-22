@@ -1,5 +1,5 @@
 import { get } from 'svelte/store';
-import type { RectanglePosition } from '$types/canvas';
+import type { RectanglePosition } from '$types/Canvas';
 import AbstractShape from '../../abstract/AbstractShape';
 import {
 	adjustOffsetWithinImageBounds,

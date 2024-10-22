@@ -1,4 +1,4 @@
-import type { ImageInfo } from '$types/canvas';
+import type { ImageInfo } from '$types/Canvas';
 import { writable } from 'svelte/store';
 import {
 	createElements,

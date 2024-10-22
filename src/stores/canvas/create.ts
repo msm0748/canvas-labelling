@@ -6,7 +6,7 @@ import {
 	MIN_SCALE,
 	ZOOM_SENSITIVITY
 } from '$lib/constants/canvas';
-import type { Position, SelectedClass, Shape, Tool } from '$types/canvas';
+import type { Position, SelectedClass, Shape, Tool } from '$types/Canvas';
 import { writable } from 'svelte/store';
 
 export const createSelectedElement = () => {

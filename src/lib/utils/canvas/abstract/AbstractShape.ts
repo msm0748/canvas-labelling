@@ -1,5 +1,5 @@
 import { canvasStore } from '$stores/canvas';
-import type { Point, RectanglePosition } from '$types/canvas';
+import type { Point, RectanglePosition } from '$types/Canvas';
 import { v4 as uuidv4 } from 'uuid';
 import { INITIAL_RESIZE_POINT } from '$lib/constants/canvas';
 

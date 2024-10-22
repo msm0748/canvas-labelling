@@ -1,7 +1,7 @@
 import { canvasStore } from '$stores/canvas';
 import { get } from 'svelte/store';
 
-import type { ImageInfo, Point } from '$types/canvas';
+import type { ImageInfo, Point } from '$types/Canvas';
 
 /** 이미지 경계를 벗어나지 않도록 조정된 새로운 좌표를 반환 */
 export const adjustOffsetWithinImageBounds = (offsetX: number, offsetY: number) => {

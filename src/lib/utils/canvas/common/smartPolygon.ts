@@ -1,5 +1,5 @@
 import { canvasStore } from '$stores/canvas';
-import type { SamPoint } from '$types/canvas';
+import type { SamPoint } from '$types/Canvas';
 import { get } from 'svelte/store';
 
 export const fetchSmartPolygon = async (points: SamPoint[]) => {

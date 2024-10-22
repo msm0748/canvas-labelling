@@ -1,5 +1,5 @@
 import { canvasStore } from '$stores/canvas';
-import type { ImageInfo } from '$types/canvas';
+import type { ImageInfo } from '$types/Canvas';
 import { get } from 'svelte/store';
 
 /**

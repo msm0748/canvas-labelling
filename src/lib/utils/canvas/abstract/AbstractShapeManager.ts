@@ -1,5 +1,5 @@
 import { canvasStore } from '$stores/canvas';
-import type { Action, Position } from '$types/canvas';
+import type { Action, Position } from '$types/Canvas';
 
 export default abstract class AbstractShapeManager {
 	public ctx: CanvasRenderingContext2D;

@@ -1,4 +1,4 @@
-import type { Size } from '$types/canvas';
+import type { Size } from '$types/Canvas';
 
 /**
  * 이미지와 캔버스 크기에 따라 이미지를 조정하여 캔버스에 맞게 배치한 결과를 반환
