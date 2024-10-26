@@ -22,18 +22,16 @@ export default abstract class AbstractShape {
 	/** 객체가 드래그 중 자연스럽게 이동하도록 돕는 변수 */
 	public dragOffsetY = 0;
 
-	constructor(type: 'polygon' | 'rectangle' | 'featurePoint') {
+	constructor(type: 'polygon' | 'rectangle' | 'featurePoint', label: string, color: string) {
+		if (!type || !label || !color) {
+			throw new Error('type, label, color는 필수값입니다.');
+		}
 		this.type = type;
+		this.label = label;
+		this.color = color;
 		this.id = uuidv4();
 		this.points = [];
 		this.isComplete = false;
-		this.label = '';
-		this.color = 'lime';
-	}
-
-	public init(label: string, color: string) {
-		this.label = label;
-		this.color = color;
 	}
 
 	abstract create(x: number, y: number): void;

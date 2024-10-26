@@ -70,7 +70,7 @@ export type MouseCursorStyle =
 
 export interface SelectedClass {
 	id: number;
-	name: string;
+	label: string;
 	color: string;
 }
 

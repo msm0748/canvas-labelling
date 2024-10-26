@@ -21,10 +21,9 @@ export class RectangleManager extends AbstractShapeManager {
 	}
 
 	createElement(offsetX: number, offsetY: number) {
-		const { name, color } = get(this.$selectedClass);
-		const element = new Rectangle();
+		const { label, color } = get(this.$selectedClass);
+		const element = new Rectangle(label, color);
 
-		element.init(name, color);
 		element.create(offsetX, offsetY);
 
 		this.$elements.set([...get(this.$elements), element]);

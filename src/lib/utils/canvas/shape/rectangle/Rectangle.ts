@@ -8,12 +8,12 @@ import {
 import { INITIAL_LINE_WIDTH, INITIAL_RESIZE_POINT } from '$lib/constants/canvas';
 
 export class Rectangle extends AbstractShape {
-	constructor() {
-		super('rectangle');
+	constructor(label: string, color: string) {
+		super('rectangle', label, color);
 		this.isComplete = true;
 	}
 
-	public create(offsetX: number, offsetY: number) {
+	public override create(offsetX: number, offsetY: number) {
 		const { adjustedOffsetX, adjustedOffsetY } = adjustOffsetWithinImageBounds(offsetX, offsetY);
 		this.points = [
 			{ x: adjustedOffsetX, y: adjustedOffsetY },
@@ -98,7 +98,7 @@ export class Rectangle extends AbstractShape {
 	}
 
 	/** 사각형 전체 이동 */
-	public move(offsetX: number, offsetY: number) {
+	public override move(offsetX: number, offsetY: number) {
 		const dx = offsetX - this.dragOffsetX - this.points[0].x;
 		const dy = offsetY - this.dragOffsetY - this.points[0].y;
 
@@ -203,7 +203,7 @@ export class Rectangle extends AbstractShape {
 		});
 	}
 
-	public draw(ctx: CanvasRenderingContext2D) {
+	public override draw(ctx: CanvasRenderingContext2D) {
 		// 확대 축소시 선 굵기와 포인트 크기를 일정하게 조정
 		this.resizePoint = INITIAL_RESIZE_POINT / get(this.$scale);
 		ctx.lineWidth = INITIAL_LINE_WIDTH / get(this.$scale);
