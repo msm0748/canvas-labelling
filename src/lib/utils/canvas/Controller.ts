@@ -38,7 +38,7 @@ export default class Controller {
 	public onMouseUp = (e: MouseEvent) => {
 		const { offsetX, offsetY } = e;
 		const { x, y } = relativeMousePos(offsetX, offsetY);
-		this.rectangleManager.onMouseUp(x, y);
+		this.rectangleManager.onMouseUp();
 	};
 
 	public onMouseWheel = (e: WheelEvent) => {

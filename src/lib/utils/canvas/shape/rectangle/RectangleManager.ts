@@ -20,7 +20,7 @@ export class RectangleManager extends AbstractShapeManager {
 		return { minX, minY, maxX, maxY };
 	}
 
-	createElement(offsetX: number, offsetY: number) {
+	protected override createElement(offsetX: number, offsetY: number) {
 		const { label, color } = get(this.$selectedClass);
 		const element = new Rectangle(label, color);
 
@@ -30,7 +30,7 @@ export class RectangleManager extends AbstractShapeManager {
 		this.action = 'drawing';
 	}
 
-	selectElement(offsetX: number, offsetY: number) {
+	protected override selectElement(offsetX: number, offsetY: number) {
 		// 마지막에 추가된 Rect부터 선택하기 위해 reverse
 		const elements = [...get(this.$elements)].reverse();
 		const selectedElement = get(this.$selectedElement);
@@ -67,7 +67,7 @@ export class RectangleManager extends AbstractShapeManager {
 		this.action = 'none';
 	}
 
-	onMouseDown(offsetX: number, offsetY: number) {
+	public override onMouseDown(offsetX: number, offsetY: number) {
 		switch (get(this.$selectedTool)) {
 			case 'rectangle':
 				if (this.action === 'none') {
@@ -84,7 +84,7 @@ export class RectangleManager extends AbstractShapeManager {
 		}
 	}
 
-	onMouseMove(offsetX: number, offsetY: number) {
+	public override onMouseMove(offsetX: number, offsetY: number) {
 		const $elements = get(this.$elements);
 
 		switch (this.action) {
@@ -117,7 +117,7 @@ export class RectangleManager extends AbstractShapeManager {
 		}
 	}
 
-	onMouseUp() {
+	public override onMouseUp() {
 		const $elements = get(this.$elements);
 
 		switch (this.action) {

@@ -34,9 +34,9 @@ export default abstract class AbstractShape {
 		this.isComplete = false;
 	}
 
-	abstract create(x: number, y: number): void;
-	abstract move(dx: number, dy: number): void;
-	abstract draw(ctx: CanvasRenderingContext2D): void;
+	public abstract create(x: number, y: number): void;
+	public abstract move(dx: number, dy: number): void;
+	public abstract draw(ctx: CanvasRenderingContext2D): void;
 
 	// 이게 필요할까???
 	public setDragOffsets(
