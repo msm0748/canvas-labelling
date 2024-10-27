@@ -12,11 +12,13 @@ import { writable } from 'svelte/store';
 export const createSelectedElement = () => {
 	const { subscribe, update, set } = writable<Shape | null>(null);
 
+	const select = (element: Shape) => set(element);
+
 	const reset = () => set(null);
 
 	return {
 		subscribe,
-		set,
+		select,
 		reset,
 		update
 	};

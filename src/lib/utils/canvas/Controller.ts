@@ -36,8 +36,9 @@ export default class Controller {
 	};
 
 	public onMouseUp = (e: MouseEvent) => {
-		const { offsetX, offsetY } = e;
-		const { x, y } = relativeMousePos(offsetX, offsetY);
+		console.log(e);
+		// const { offsetX, offsetY } = e;
+		// const { x, y } = relativeMousePos(offsetX, offsetY);
 		this.rectangleManager.onMouseUp();
 	};
 

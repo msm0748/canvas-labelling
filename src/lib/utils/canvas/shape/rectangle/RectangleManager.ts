@@ -44,7 +44,7 @@ export class RectangleManager extends AbstractShapeManager {
 				const dragOffsets = element.calculateDragOffsets(offsetX, offsetY, 'inside');
 
 				element.setDragOffsets(dragOffsets.dragOffsetX, dragOffsets.dragOffsetY, 'inside');
-				this.$selectedElement.set(element);
+				this.$selectedElement.select(element);
 				this.action = 'moving';
 				return;
 			} else {
@@ -55,7 +55,7 @@ export class RectangleManager extends AbstractShapeManager {
 					dragOffsets.dragOffsetY,
 					dragOffsets.position
 				);
-				this.$selectedElement.set(element);
+				this.$selectedElement.select(element);
 
 				this.action = selectedElement.position === 'inside' ? 'moving' : 'updating';
 
@@ -63,7 +63,7 @@ export class RectangleManager extends AbstractShapeManager {
 			}
 		}
 
-		this.$selectedElement.set(null);
+		this.$selectedElement.reset();
 		this.action = 'none';
 	}
 
