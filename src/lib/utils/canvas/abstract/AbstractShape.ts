@@ -52,7 +52,7 @@ export default abstract class AbstractShape {
 		return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 	}
 
-	/** 드래그 작업 중 특정 위치를 기준으로 오프셋을 계산 */
+	/** 드래그 작업 중 특정 위치를 기준으로 계산된 오프셋 값을 저장하는 함수 */
 	public setDragOffsets(
 		dragOffsetX: number,
 		dragOffsetY: number,
