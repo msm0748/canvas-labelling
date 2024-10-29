@@ -1,20 +1,22 @@
-import type { ImageInfo } from '$types/Canvas';
+import type { ImageInfo, Shape } from '$types/Canvas';
 import { writable } from 'svelte/store';
 import {
-	createElements,
-	createScale,
-	createSelectedClass,
-	createSelectedElement,
-	createSelectedTool,
-	createViewPos
+	createElementsStore,
+	createHistoryStore,
+	createScaleStore,
+	createSelectedClassStore,
+	createSelectedElementStore,
+	createSelectedToolStore,
+	createViewPosStore
 } from './create';
 
 export const canvasStore = {
 	imageInfo: writable<ImageInfo | null>(null),
-	scale: createScale(),
-	viewPos: createViewPos(),
-	selectedElement: createSelectedElement(),
-	selectedClass: createSelectedClass(),
-	selectedTool: createSelectedTool(),
-	elements: createElements()
+	scale: createScaleStore(),
+	viewPos: createViewPosStore(),
+	selectedElement: createSelectedElementStore(),
+	selectedClass: createSelectedClassStore(),
+	selectedTool: createSelectedToolStore(),
+	elements: createElementsStore(),
+	history: createHistoryStore<Shape>()
 };

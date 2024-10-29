@@ -1,4 +1,5 @@
 import {
+	INITIAL_HISTORY,
 	INITIAL_POSITION,
 	INITIAL_SCALE,
 	INITIAL_SELECTED_TOOL,
@@ -6,10 +7,92 @@ import {
 	MIN_SCALE,
 	ZOOM_SENSITIVITY
 } from '$lib/constants/canvas';
-import type { Position, SelectedClass, Shape, Tool } from '$types/Canvas';
+import type { HistoryStore, Position, SelectedClass, Shape, Tool } from '$types/Canvas';
 import { writable } from 'svelte/store';
 
-export const createSelectedElement = () => {
+export const createHistoryStore = <T>() => {
+	const { set, subscribe, update } = writable<HistoryStore<T>>(INITIAL_HISTORY);
+
+	/**
+	 * @param action element의 배열
+	 * @param overwrite 되돌리기 후 새로운 배열을 추가할 때 덮어쓸지 여부
+	 */
+	const setState = (action: T[], overwrite = false) => {
+		update((state) => {
+			if (overwrite) {
+				const historyCopy = [...state.history];
+
+				historyCopy[state.index] = action;
+
+				return {
+					history: historyCopy,
+					index: state.index
+				};
+			} else {
+				// 되돌리기 하고 새로운 배열을 추가 했을 때 뒤에 있는 배열을 날리기 위함
+				const updatedState = state.history.slice(0, state.index + 1);
+				const newHistory = [...updatedState, action];
+
+				if (newHistory.length > 15) {
+					newHistory.shift();
+					return {
+						history: newHistory,
+						index: state.index
+					};
+				}
+				return {
+					history: newHistory,
+					index: state.index + 1
+				};
+			}
+		});
+	};
+
+	const undo = () => {
+		update((state) => {
+			if (state.index > 0) {
+				return { ...state, index: state.index - 1 };
+			}
+			return state;
+		});
+	};
+
+	const redo = () => {
+		update((state) => {
+			if (state.index < state.history.length - 1) {
+				return { ...state, index: state.index + 1 };
+			}
+			return state;
+		});
+	};
+
+	const reset = () => {
+		set(INITIAL_HISTORY);
+	};
+
+	return {
+		subscribe,
+		setState,
+		undo,
+		redo,
+		reset
+	};
+};
+
+export const createElementsStore = () => {
+	const { subscribe, set, update } = writable<Shape[]>([]);
+
+	const reset = () => set([]);
+
+	return {
+		subscribe,
+		set,
+		reset,
+		update
+	};
+};
+
+export const createSelectedElementStore = () => {
 	const { subscribe, update, set } = writable<Shape | null>(null);
 
 	const select = (element: Shape) => set(element);
@@ -24,20 +107,7 @@ export const createSelectedElement = () => {
 	};
 };
 
-export const createElements = () => {
-	const { subscribe, set, update } = writable<Shape[]>([]);
-
-	const reset = () => set([]);
-
-	return {
-		subscribe,
-		set,
-		reset,
-		update
-	};
-};
-
-export const createViewPos = () => {
+export const createViewPosStore = () => {
 	const { subscribe, set, update } = writable<Position>(INITIAL_POSITION);
 
 	const move = (deltaX: number, deltaY: number) => {
@@ -63,7 +133,7 @@ export const createViewPos = () => {
 };
 
 /** 클래스 선택하는 함수 */
-export const createSelectedClass = () => {
+export const createSelectedClassStore = () => {
 	const { subscribe, set } = writable<SelectedClass>({ id: 0, label: 'seagull', color: '#0094FF' });
 
 	const select = (id: number, label: string, color: string) => {
@@ -76,7 +146,7 @@ export const createSelectedClass = () => {
 	};
 };
 
-export const createSelectedTool = () => {
+export const createSelectedToolStore = () => {
 	const { subscribe, set } = writable<Tool>(INITIAL_SELECTED_TOOL);
 
 	const select = (tool: Tool) => {
@@ -92,7 +162,7 @@ export const createSelectedTool = () => {
 	};
 };
 
-export const createScale = () => {
+export const createScaleStore = () => {
 	const { subscribe, set, update } = writable<number>(INITIAL_SCALE);
 
 	const zoomIn = () => {
