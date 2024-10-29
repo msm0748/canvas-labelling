@@ -11,12 +11,19 @@ export default class Controller {
 	private scaleManager: ScaleManager; // ScaleManager의 인스턴스를 속성으로 저장
 	private imageManager: ImageManager;
 	private rectangleManager: RectangleManager;
+	private static instance: Controller | null = null;
 
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
 		this.scaleManager = new ScaleManager(); // 생성자에서 인스턴스를 생성
 		this.imageManager = new ImageManager();
 		this.rectangleManager = new RectangleManager(ctx);
+
+		if (Controller.instance) {
+			return Controller.instance;
+		}
+
+		Controller.instance = this;
 	}
 
 	public onMouseDown = (e: MouseEvent) => {
@@ -71,10 +78,15 @@ export default class Controller {
 		this.animationFrameId = requestAnimationFrame(this.animateDraw);
 	};
 
-	public stopAnimation = () => {
+	private stopAnimation = () => {
 		if (this.animationFrameId) {
 			cancelAnimationFrame(this.animationFrameId);
 			this.animationFrameId = null;
 		}
+	};
+
+	public destroy = () => {
+		this.stopAnimation();
+		Controller.instance = null;
 	};
 }

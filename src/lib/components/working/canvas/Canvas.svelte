@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { INITIAL_SIZE } from '$lib/constants/canvas';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { adjustImageToCanvas } from '$lib/utils/canvas/common/adjustImageToCanvas';
 	import { canvasStore } from '$stores/canvas';
 	import Controller from '$lib/utils/canvas/Controller';
@@ -58,12 +58,14 @@
 
 		image.onload = () => {
 			setImage(image);
-			// imageDraw();
-
-			controller.animateDraw();
-
-			// new Controller(canvas);
 		};
+		controller.animateDraw();
+	});
+
+	onDestroy(() => {
+		if (controller) {
+			controller.destroy();
+		}
 	});
 </script>
 
@@ -76,7 +78,9 @@
 	on:mousedown={controller.onMouseDown}
 	on:mousemove={controller.onMouseMove}
 	on:mouseup={controller.onMouseUp}
-	on:contextmenu|preventDefault
+	on:contextmenu|preventDefault={() => {
+		console.log('asdf');
+	}}
 	on:wheel={controller.onMouseWheel}
 	tabindex="0"
 	role="button"

@@ -1,4 +1,13 @@
-import type { Position, Size, Tool, Action, SelectedClass, Sam } from '$types/Canvas';
+import type {
+	Position,
+	Size,
+	Tool,
+	Action,
+	SelectedClass,
+	Sam,
+	HistoryStore,
+	Shape
+} from '$types/Canvas';
 
 // 초기 캔버스 크기
 export const INITIAL_SIZE: Size = { width: 0, height: 0 };

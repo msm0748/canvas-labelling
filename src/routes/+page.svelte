@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, onMount, setContext } from 'svelte';
+	import { setContext } from 'svelte';
 	import Canvas from '$lib/components/working/canvas/Canvas.svelte';
 
 	setContext('label', 'rectangle');

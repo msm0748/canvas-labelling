@@ -2,8 +2,6 @@
 	import { getContext } from 'svelte';
 
 	const classes = getContext('classes');
-
-	console.log(classes);
 </script>
 
 <div class="wrap">
