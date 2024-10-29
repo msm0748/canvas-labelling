@@ -1,7 +1,15 @@
-<div>클래스들</div>
+<script lang="ts">
+	import Classes from './Classes.svelte';
+	import Labels from './Labels.svelte';
+</script>
+
+<aside>
+	<Classes />
+	<Labels />
+</aside>
 
 <style lang="scss">
-	div {
-		width: 300px;
+	aside {
+		width: 310px;
 	}
 </style>

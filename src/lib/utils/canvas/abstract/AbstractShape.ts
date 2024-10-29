@@ -38,7 +38,7 @@ export default abstract class AbstractShape {
 	public abstract move(dx: number, dy: number): void;
 	public abstract draw(ctx: CanvasRenderingContext2D): void;
 
-	// 이게 필요할까???
+	/** 드래그 작업 중 특정 위치를 기준으로 오프셋을 계산 */
 	public setDragOffsets(
 		dragOffsetX: number,
 		dragOffsetY: number,
