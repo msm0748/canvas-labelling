@@ -11,6 +11,7 @@ export default abstract class AbstractShape {
 	public points: Point[];
 	public isComplete: boolean;
 	public resizePoint = INITIAL_RESIZE_POINT;
+	public isVisible = true;
 
 	public $selectedElement = canvasStore.selectedElement;
 	public $scale = canvasStore.scale; // 전역

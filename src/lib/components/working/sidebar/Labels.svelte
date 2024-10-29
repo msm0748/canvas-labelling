@@ -18,7 +18,8 @@
 					<div>></div>
 				</div>
 				<div>
-					<button>눈</button>
+					<button on:click={() => (element.isVisible = !element.isVisible)}>눈</button>
+					<!-- {element.} -->
 				</div>
 				<div>
 					<button>...</button>

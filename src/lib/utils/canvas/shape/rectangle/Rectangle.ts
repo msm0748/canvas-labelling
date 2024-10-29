@@ -208,6 +208,8 @@ export class Rectangle extends AbstractShape {
 		this.resizePoint = INITIAL_RESIZE_POINT / get(this.$scale);
 		ctx.lineWidth = INITIAL_LINE_WIDTH / get(this.$scale);
 
+		if (this.isVisible === false) return;
+
 		const { x: sX, y: sY } = this.points[0];
 		const { x: cX, y: cY } = this.points[1];
 		const width = cX - sX;
