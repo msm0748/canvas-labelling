@@ -1,13 +1,13 @@
 import { get } from 'svelte/store';
 import type { RectanglePosition } from '$types/Canvas';
-import AbstractShape from '../../abstract/AbstractShape';
+import BaseShape from '../../base/BaseShape';
 import {
 	adjustOffsetWithinImageBounds,
 	getConstrainedRectanglePoints
 } from '../../common/constrainedShapePoints';
 import { INITIAL_LINE_WIDTH, INITIAL_RESIZE_POINT } from '$lib/constants/canvas';
 
-export class Rectangle extends AbstractShape {
+export class Rectangle extends BaseShape {
 	constructor(label: string, color: string) {
 		super('rectangle', label, color);
 		this.isComplete = true;

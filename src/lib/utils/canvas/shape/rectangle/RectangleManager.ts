@@ -1,9 +1,9 @@
 import { get } from 'svelte/store';
 import { Rectangle } from './Rectangle';
-import AbstractShapeManager from '../../abstract/AbstractShapeManager';
+import BaseShapeManager from '../../base/BaseShapeManager';
 import { updateElements } from '$stores/canvas/functions';
 
-export class RectangleManager extends AbstractShapeManager {
+export class RectangleManager extends BaseShapeManager {
 	constructor(ctx: CanvasRenderingContext2D) {
 		super(ctx);
 	}

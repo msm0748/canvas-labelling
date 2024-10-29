@@ -3,7 +3,7 @@ import type { Action, Position } from '$types/Canvas';
 import _ from 'lodash';
 import { get } from 'svelte/store';
 
-export default abstract class AbstractShapeManager {
+export default abstract class BaseShapeManager {
 	protected ctx: CanvasRenderingContext2D;
 	protected action: Action = 'none';
 	protected $selectedClass = canvasStore.selectedClass;

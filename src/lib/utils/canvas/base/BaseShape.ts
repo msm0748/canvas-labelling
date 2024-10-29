@@ -3,7 +3,7 @@ import type { Point, RectanglePosition } from '$types/Canvas';
 import { v4 as uuidv4 } from 'uuid';
 import { INITIAL_RESIZE_POINT } from '$lib/constants/canvas';
 
-export default abstract class AbstractShape {
+export default abstract class BaseShape {
 	public id: string;
 	public type: string;
 	public label: string;
