@@ -43,7 +43,7 @@ export default class Controller {
 	};
 
 	public onMouseUp = (e: MouseEvent) => {
-		console.log(e);
+		// console.log(e);
 		// const { offsetX, offsetY } = e;
 		// const { x, y } = relativeMousePos(offsetX, offsetY);
 		this.rectangleManager.onMouseUp();
@@ -87,6 +87,7 @@ export default class Controller {
 
 	public destroy = () => {
 		this.stopAnimation();
+		this.rectangleManager.destroy();
 		Controller.instance = null;
 	};
 }

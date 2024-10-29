@@ -1,6 +1,7 @@
 import { get } from 'svelte/store';
 import { Rectangle } from './Rectangle';
 import AbstractShapeManager from '../../abstract/AbstractShapeManager';
+import { updateElements } from '$stores/canvas/functions';
 
 export class RectangleManager extends AbstractShapeManager {
 	constructor(ctx: CanvasRenderingContext2D) {
@@ -26,7 +27,7 @@ export class RectangleManager extends AbstractShapeManager {
 
 		element.create(offsetX, offsetY);
 
-		this.$elements.set([...get(this.$elements), element]);
+		this.$history.setState([...get(this.$elements), element]);
 		this.action = 'drawing';
 	}
 
@@ -133,6 +134,8 @@ export class RectangleManager extends AbstractShapeManager {
 					element.points[1] = { x: maxX, y: maxY };
 
 					if (Math.abs(sX - cX) < 5 || Math.abs(sY - cY) < 5) return;
+
+					updateElements(element, true);
 				}
 				break;
 
@@ -149,6 +152,8 @@ export class RectangleManager extends AbstractShapeManager {
 
 					selectedElement.points[0] = { x: minX, y: minY };
 					selectedElement.points[1] = { x: maxX, y: maxY };
+
+					updateElements(selectedElement);
 				}
 				break;
 
