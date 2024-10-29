@@ -64,7 +64,7 @@ export const createViewPos = () => {
 
 /** 클래스 선택하는 함수 */
 export const createSelectedClass = () => {
-	const { subscribe, set } = writable<SelectedClass>({ id: 0, label: '새', color: '#0094FF' });
+	const { subscribe, set } = writable<SelectedClass>({ id: 0, label: 'seagull', color: '#0094FF' });
 
 	const select = (id: number, label: string, color: string) => {
 		set({ id, label, color });

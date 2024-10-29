@@ -204,11 +204,20 @@ export class Rectangle extends AbstractShape {
 	}
 
 	public override draw(ctx: CanvasRenderingContext2D) {
+		if (this.isVisible === false) return;
+
+		if (this.isComplete) {
+			ctx.font = `bold 14px Pretendard`;
+			ctx.fillStyle = '#fff';
+			ctx.strokeStyle = this.hexToRgba(this.color, 0.3);
+			ctx.lineWidth = 1.2; // 원하는 선 두께로 조정
+			ctx.strokeText(this.label, this.points[0].x, this.points[0].y - 5);
+			ctx.fillText(this.label, this.points[0].x, this.points[0].y - 5);
+		}
+
 		// 확대 축소시 선 굵기와 포인트 크기를 일정하게 조정
 		this.resizePoint = INITIAL_RESIZE_POINT / get(this.$scale);
 		ctx.lineWidth = INITIAL_LINE_WIDTH / get(this.$scale);
-
-		if (this.isVisible === false) return;
 
 		const { x: sX, y: sY } = this.points[0];
 		const { x: cX, y: cY } = this.points[1];

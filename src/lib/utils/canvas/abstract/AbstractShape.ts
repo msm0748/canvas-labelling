@@ -39,6 +39,19 @@ export default abstract class AbstractShape {
 	public abstract move(dx: number, dy: number): void;
 	public abstract draw(ctx: CanvasRenderingContext2D): void;
 
+	/** hex 코드를 rgba 형태로 변환하는 함수 */
+	protected hexToRgba(hex: string, opacity: number) {
+		// hex의 첫 글자가 "#"인 경우 제거
+		hex = hex.replace('#', '');
+
+		// 각 색상 값을 16진수에서 10진수로 변환
+		const r = parseInt(hex.substring(0, 2), 16);
+		const g = parseInt(hex.substring(2, 4), 16);
+		const b = parseInt(hex.substring(4, 6), 16);
+
+		return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+	}
+
 	/** 드래그 작업 중 특정 위치를 기준으로 오프셋을 계산 */
 	public setDragOffsets(
 		dragOffsetX: number,
