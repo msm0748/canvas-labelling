@@ -5,7 +5,7 @@ export default class ScaleManager {
 	private $scale = canvasStore.scale;
 	private $viewPos = canvasStore.viewPos;
 
-	private zoom(offsetX: number, offsetY: number, deltaY: number) {
+	private canvasZoom(offsetX: number, offsetY: number, deltaY: number) {
 		const xs = (offsetX - get(this.$viewPos).x) / get(this.$scale);
 		const ys = (offsetY - get(this.$viewPos).y) / get(this.$scale);
 
@@ -18,11 +18,13 @@ export default class ScaleManager {
 		const adjustedX = offsetX - xs * get(this.$scale);
 		const adjustedY = offsetY - ys * get(this.$scale);
 
-		this.$viewPos.zoom(adjustedX, adjustedY);
+		this.$viewPos.set({ x: adjustedX, y: adjustedY });
 	}
 
-	private move(deltaX: number, deltaY: number) {
-		this.$viewPos.move(deltaX, deltaY);
+	private canvasMove(deltaX: number, deltaY: number) {
+		const x = get(this.$viewPos).x - deltaX;
+		const y = get(this.$viewPos).y - deltaY;
+		this.$viewPos.set({ x, y });
 	}
 
 	public handleWheel(e: WheelEvent) {
@@ -30,9 +32,9 @@ export default class ScaleManager {
 		const { ctrlKey, metaKey, deltaX, deltaY, offsetX, offsetY } = e;
 
 		if (ctrlKey || metaKey) {
-			this.zoom(offsetX, offsetY, deltaY);
+			this.canvasZoom(offsetX, offsetY, deltaY);
 		} else {
-			this.move(deltaX, deltaY);
+			this.canvasMove(deltaX, deltaY);
 		}
 	}
 }

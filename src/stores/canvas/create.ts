@@ -110,27 +110,12 @@ export const createSelectedElementStore = () => {
 };
 
 export const createViewPosStore = () => {
-	const { subscribe, set, update } = writable<Position>(INITIAL_POSITION);
-
-	const move = (deltaX: number, deltaY: number) => {
-		update((pos) => ({
-			x: pos.x - deltaX,
-			y: pos.y - deltaY
-		}));
-	};
-
-	const zoom = (adjustedX: number, adjustedY: number) =>
-		set({
-			x: adjustedX,
-			y: adjustedY
-		});
+	const { subscribe, set } = writable<Position>(INITIAL_POSITION);
 
 	const reset = () => set(INITIAL_POSITION);
 	return {
 		subscribe,
 		set,
-		move,
-		zoom,
 		reset
 	};
 };
