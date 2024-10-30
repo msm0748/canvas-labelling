@@ -11,6 +11,7 @@ export default class MouseController {
 	private $scale = canvasStore.scale;
 	private $viewPos = canvasStore.viewPos;
 	private $selectedTool = canvasStore.selectedTool;
+	private $mouseCursorStyle = canvasStore.mouseCursorStyle;
 
 	private startPos = INITIAL_POSITION;
 	private isTouch = false;
@@ -35,6 +36,8 @@ export default class MouseController {
 			if (get(this.$selectedTool) === 'move') {
 				this.startPos = { x: offsetX - get(this.$viewPos).x, y: offsetY - get(this.$viewPos).y };
 				this.isTouch = true;
+
+				this.$mouseCursorStyle.set('grabbing');
 			}
 			this.rectangleManager.onMouseDown(x, y);
 		}
@@ -54,6 +57,9 @@ export default class MouseController {
 	public onMouseUp = () => {
 		this.rectangleManager.onMouseUp();
 		this.isTouch = false;
+		if (get(this.$selectedTool) === 'move') {
+			this.$mouseCursorStyle.set('grab');
+		}
 	};
 
 	private canvasZoom(offsetX: number, offsetY: number, deltaY: number) {

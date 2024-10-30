@@ -19,7 +19,7 @@
 	let canvasView: CanvasView;
 	let keyboardController = new KeyboardController();
 
-	let { imageInfo, canvasSize } = canvasStore;
+	let { imageInfo, canvasSize, mouseCursorStyle, selectedTool } = canvasStore;
 
 	/** 이미지 정보를 저장하는 함수 */
 	const setImage = (image: HTMLImageElement) => {
@@ -53,6 +53,7 @@
 			canvasView.animateDraw();
 		};
 	});
+
 	onDestroy(() => {
 		if (mouseController) {
 			mouseController.destroy();
@@ -64,12 +65,26 @@
 
 		keyboardController.destroy();
 	});
+
+	// 마우스 커서 스타일 적용
+	$: {
+		switch ($selectedTool) {
+			case 'move':
+				mouseCursorStyle.set('grab');
+				break;
+
+			default:
+				mouseCursorStyle.set('default');
+				break;
+		}
+	}
 </script>
 
 <div class="wrap">
 	<div
 		class="canvas-wrap"
 		id="canvas-controller"
+		style="cursor: {$mouseCursorStyle};"
 		bind:this={canvasController}
 		bind:offsetWidth={size.width}
 		bind:offsetHeight={size.height}

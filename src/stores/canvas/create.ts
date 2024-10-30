@@ -2,6 +2,7 @@ import {
 	INITIAL_BRIGHTNESS,
 	INITIAL_CONTRAST,
 	INITIAL_HISTORY,
+	INITIAL_MOUSE_CURSOR_STYLE,
 	INITIAL_POSITION,
 	INITIAL_SCALE,
 	INITIAL_SELECTED_TOOL,
@@ -9,7 +10,14 @@ import {
 	MIN_SCALE,
 	ZOOM_SENSITIVITY
 } from '$lib/constants/canvas';
-import type { HistoryStore, Position, SelectedClass, Shape, Tool } from '$types/Canvas';
+import type {
+	HistoryStore,
+	MouseCursorStyle,
+	Position,
+	SelectedClass,
+	Shape,
+	Tool
+} from '$types/Canvas';
 import { writable } from 'svelte/store';
 
 export const createHistoryStore = <T>() => {
@@ -150,7 +158,7 @@ export const createSelectedToolStore = () => {
 	};
 };
 
-export const createCanvasBrightness = () => {
+export const createCanvasBrightnessStore = () => {
 	const { subscribe, set } = writable<number>(INITIAL_BRIGHTNESS);
 
 	const reset = () => set(INITIAL_BRIGHTNESS);
@@ -162,7 +170,7 @@ export const createCanvasBrightness = () => {
 	};
 };
 
-export const createCanvasContrast = () => {
+export const createCanvasContrastStore = () => {
 	const { subscribe, set } = writable<number>(INITIAL_CONTRAST);
 
 	const reset = () => set(INITIAL_CONTRAST);
@@ -202,6 +210,18 @@ export const createScaleStore = () => {
 		set,
 		zoomIn,
 		zoomOut,
+		reset
+	};
+};
+
+export const createMouseCursorStyleStore = () => {
+	const { subscribe, set } = writable<MouseCursorStyle>(INITIAL_MOUSE_CURSOR_STYLE);
+
+	const reset = () => set(INITIAL_MOUSE_CURSOR_STYLE);
+
+	return {
+		subscribe,
+		set,
 		reset
 	};
 };

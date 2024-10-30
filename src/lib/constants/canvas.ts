@@ -1,4 +1,12 @@
-import type { Position, Size, Tool, Action, SelectedClass, Sam } from '$types/Canvas';
+import type {
+	Position,
+	Size,
+	Tool,
+	Action,
+	SelectedClass,
+	Sam,
+	MouseCursorStyle
+} from '$types/Canvas';
 
 // 초기 캔버스 크기
 export const INITIAL_SIZE: Size = { width: 0, height: 0 };
@@ -41,6 +49,8 @@ export const MIN_CONTRAST = 0;
 export const MAX_CONTRAST = 500;
 
 export const INITIAL_CLASS_SELECTOR: SelectedClass = { id: 0, label: '', color: '' };
+
+export const INITIAL_MOUSE_CURSOR_STYLE: MouseCursorStyle = 'default';
 
 export const INITIAL_HISTORY = {
 	index: 0,

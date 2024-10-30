@@ -1,10 +1,11 @@
 import type { ImageInfo, Shape, Size } from '$types/Canvas';
 import { writable } from 'svelte/store';
 import {
-	createCanvasBrightness,
-	createCanvasContrast,
+	createCanvasBrightnessStore,
+	createCanvasContrastStore,
 	createElementsStore,
 	createHistoryStore,
+	createMouseCursorStyleStore,
 	createScaleStore,
 	createSelectedClassStore,
 	createSelectedElementStore,
@@ -23,6 +24,7 @@ export const canvasStore = {
 	selectedTool: createSelectedToolStore(),
 	elements: createElementsStore(),
 	history: createHistoryStore<Shape>(),
-	brightness: createCanvasBrightness(),
-	contrast: createCanvasContrast()
+	brightness: createCanvasBrightnessStore(),
+	contrast: createCanvasContrastStore(),
+	mouseCursorStyle: createMouseCursorStyleStore()
 };
