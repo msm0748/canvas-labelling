@@ -1,4 +1,6 @@
 import {
+	INITIAL_BRIGHTNESS,
+	INITIAL_CONTRAST,
 	INITIAL_HISTORY,
 	INITIAL_POSITION,
 	INITIAL_SCALE,
@@ -126,6 +128,7 @@ export const createViewPosStore = () => {
 	const reset = () => set(INITIAL_POSITION);
 	return {
 		subscribe,
+		set,
 		move,
 		zoom,
 		reset
@@ -162,6 +165,30 @@ export const createSelectedToolStore = () => {
 	};
 };
 
+export const createCanvasBrightness = () => {
+	const { subscribe, set } = writable<number>(INITIAL_BRIGHTNESS);
+
+	const reset = () => set(INITIAL_BRIGHTNESS);
+
+	return {
+		subscribe,
+		set,
+		reset
+	};
+};
+
+export const createCanvasContrast = () => {
+	const { subscribe, set } = writable<number>(INITIAL_CONTRAST);
+
+	const reset = () => set(INITIAL_CONTRAST);
+
+	return {
+		subscribe,
+		set,
+		reset
+	};
+};
+
 export const createScaleStore = () => {
 	const { subscribe, set, update } = writable<number>(INITIAL_SCALE);
 
@@ -187,6 +214,7 @@ export const createScaleStore = () => {
 
 	return {
 		subscribe,
+		set,
 		zoomIn,
 		zoomOut,
 		reset

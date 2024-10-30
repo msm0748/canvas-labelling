@@ -4,6 +4,7 @@ import ScaleManager from './ScaleManager';
 import { canvasStore } from '$stores/canvas';
 import { RectangleManager } from './shape/rectangle/RectangleManager';
 import { relativeMousePos } from './common/mousePositionCalculator';
+import { INITIAL_BRIGHTNESS, INITIAL_CONTRAST } from '$lib/constants/canvas';
 
 export default class Controller {
 	public ctx: CanvasRenderingContext2D;
@@ -69,7 +70,9 @@ export default class Controller {
 	private draw = () => {
 		this.clearRect();
 		this.setTransform();
+		this.ctx.filter = `brightness(${get(canvasStore.brightness)}%) contrast(${get(canvasStore.contrast)}%)`;
 		this.imageManager.draw(this.ctx);
+		this.ctx.filter = `brightness(${INITIAL_BRIGHTNESS}%) contrast(${INITIAL_CONTRAST}%)`;
 		this.rectangleManager.draw();
 	};
 

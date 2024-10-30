@@ -1,13 +1,4 @@
-import type {
-	Position,
-	Size,
-	Tool,
-	Action,
-	SelectedClass,
-	Sam,
-	HistoryStore,
-	Shape
-} from '$types/Canvas';
+import type { Position, Size, Tool, Action, SelectedClass, Sam } from '$types/Canvas';
 
 // 초기 캔버스 크기
 export const INITIAL_SIZE: Size = { width: 0, height: 0 };
@@ -32,12 +23,24 @@ export const INITIAL_SELECTED_TOOL: Tool = 'select';
 export const INITIAL_ACTION: Action = 'none';
 
 // 캔버스에서 라벨링 할 때 리사이즈 초기 포인트 두께
-export const INITIAL_RESIZE_POINT = 8;
+export const INITIAL_RESIZE_POINT = 10;
 
 // 캔버스에서 라벨링 할 때 초기 선 두께
 export const INITIAL_LINE_WIDTH = 2;
 
-// export const INITIAL_CLASS_SELECTOR: SelectedClass = { name: '', color: '' };
+// 캔버스 명도
+export const INITIAL_BRIGHTNESS = 100;
+
+export const MIN_BRIGHTNESS = 0;
+export const MAX_BRIGHTNESS = 500;
+
+// 캔버스 대비
+export const INITIAL_CONTRAST = 100;
+
+export const MIN_CONTRAST = 0;
+export const MAX_CONTRAST = 500;
+
+export const INITIAL_CLASS_SELECTOR: SelectedClass = { id: 0, label: '', color: '' };
 
 export const INITIAL_HISTORY = {
 	index: 0,

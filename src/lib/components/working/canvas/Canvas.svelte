@@ -4,10 +4,9 @@
 	import { adjustImageToCanvas } from '$lib/utils/canvas/common/adjustImageToCanvas';
 	import { canvasStore } from '$stores/canvas';
 	import Controller from '$lib/utils/canvas/Controller';
+	import Options from './options/Options.svelte';
 
 	export let imageSrc: string;
-	export let brightness: number;
-	export let contrast: number;
 
 	let canvas: HTMLCanvasElement;
 	let ctx: CanvasRenderingContext2D | null;
@@ -16,7 +15,7 @@
 
 	let controller: Controller;
 
-	let { imageInfo } = canvasStore;
+	let { imageInfo, canvasSize } = canvasStore;
 
 	/** 이미지 정보를 저장하는 함수 */
 	const setImage = (image: HTMLImageElement) => {
@@ -33,23 +32,11 @@
 		});
 	};
 
-	const imageDraw = () => {
-		if (!ctx) return;
-
-		if ($imageInfo) {
-			ctx.drawImage(
-				$imageInfo.element,
-				$imageInfo.x,
-				$imageInfo.y,
-				$imageInfo.width,
-				$imageInfo.height
-			);
-		}
-	};
-
 	onMount(() => {
 		ctx = canvas.getContext('2d');
 		if (!ctx) return;
+
+		canvasSize.set(size);
 
 		controller = new Controller(ctx);
 
@@ -58,10 +45,9 @@
 
 		image.onload = () => {
 			setImage(image);
+			controller.animateDraw();
 		};
-		controller.animateDraw();
 	});
-
 	onDestroy(() => {
 		if (controller) {
 			controller.destroy();
@@ -69,24 +55,27 @@
 	});
 </script>
 
-<div
-	class="wrap"
-	id="canvas-controller"
-	bind:this={canvasController}
-	bind:offsetWidth={size.width}
-	bind:offsetHeight={size.height}
-	on:mousedown={controller.onMouseDown}
-	on:mousemove={controller.onMouseMove}
-	on:mouseup={controller.onMouseUp}
-	on:contextmenu|preventDefault={() => {
-		console.log('asdf');
-	}}
-	on:wheel={controller.onMouseWheel}
-	tabindex="0"
-	role="button"
-	aria-pressed="false"
->
-	<canvas bind:this={canvas} width={size.width} height={size.height} />
+<div class="wrap">
+	<div
+		class="canvas-wrap"
+		id="canvas-controller"
+		bind:this={canvasController}
+		bind:offsetWidth={size.width}
+		bind:offsetHeight={size.height}
+		on:mousedown={controller.onMouseDown}
+		on:mousemove={controller.onMouseMove}
+		on:mouseup={controller.onMouseUp}
+		on:contextmenu|preventDefault
+		on:wheel={controller.onMouseWheel}
+		tabindex="0"
+		role="button"
+		aria-pressed="false"
+	>
+		<canvas bind:this={canvas} width={size.width} height={size.height} />
+	</div>
+	<div class="option-control">
+		<Options />
+	</div>
 </div>
 
 <style lang="scss">
@@ -95,14 +84,26 @@
 		height: 100%;
 		min-width: 300px;
 		background-color: #374150;
+
 		&:focus {
 			outline: none;
 		}
+		.canvas-wrap {
+			position: relative;
+			width: 100%;
+			height: 100%;
 
-		canvas {
+			canvas {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+		}
+
+		.option-control {
 			position: absolute;
-			top: 0;
-			left: 0;
+			bottom: 40px;
+			left: 8px;
 		}
 	}
 </style>
