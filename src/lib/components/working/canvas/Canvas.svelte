@@ -3,8 +3,9 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { adjustImageToCanvas } from '$lib/utils/canvas/common/adjustImageToCanvas';
 	import { canvasStore } from '$stores/canvas';
-	import Controller from '$lib/utils/canvas/Controller';
+	import MouseController from '$lib/utils/canvas/MouseController';
 	import Options from './options/Options.svelte';
+	import CanvasView from '$lib/utils/canvas/CanvasView';
 
 	export let imageSrc: string;
 
@@ -13,7 +14,8 @@
 	let size = INITIAL_SIZE;
 	let canvasController: HTMLDivElement;
 
-	let controller: Controller;
+	let mouseController: MouseController;
+	let canvasView: CanvasView;
 
 	let { imageInfo, canvasSize } = canvasStore;
 
@@ -38,19 +40,24 @@
 
 		canvasSize.set(size);
 
-		controller = new Controller(ctx);
+		mouseController = new MouseController(ctx);
+		canvasView = new CanvasView(ctx);
 
 		const image = new Image();
 		image.src = imageSrc;
 
 		image.onload = () => {
 			setImage(image);
-			controller.animateDraw();
+			canvasView.animateDraw();
 		};
 	});
 	onDestroy(() => {
-		if (controller) {
-			controller.destroy();
+		if (mouseController) {
+			mouseController.destroy();
+		}
+
+		if (canvasView) {
+			canvasView.destroy();
 		}
 	});
 </script>
@@ -62,11 +69,11 @@
 		bind:this={canvasController}
 		bind:offsetWidth={size.width}
 		bind:offsetHeight={size.height}
-		on:mousedown={controller.onMouseDown}
-		on:mousemove={controller.onMouseMove}
-		on:mouseup={controller.onMouseUp}
+		on:mousedown={mouseController.onMouseDown}
+		on:mousemove={mouseController.onMouseMove}
+		on:mouseup={mouseController.onMouseUp}
 		on:contextmenu|preventDefault
-		on:wheel={controller.onMouseWheel}
+		on:wheel={mouseController.onMouseWheel}
 		tabindex="0"
 		role="button"
 		aria-pressed="false"

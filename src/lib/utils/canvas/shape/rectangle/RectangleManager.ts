@@ -162,10 +162,4 @@ export class RectangleManager extends BaseShapeManager {
 		}
 		this.action = 'none';
 	}
-
-	public draw() {
-		const $elements = get(this.$elements);
-
-		$elements.forEach((element) => element.draw(this.ctx));
-	}
 }

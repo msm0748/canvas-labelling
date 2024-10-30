@@ -7,4 +7,4 @@
 	const imageSrc = '/test.png';
 </script>
 
-<Canvas {imageSrc} brightness={100} contrast={100}></Canvas>
+<Canvas {imageSrc}></Canvas>
