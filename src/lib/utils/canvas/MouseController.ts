@@ -43,9 +43,17 @@ export default class MouseController {
 		}
 	};
 
+	public onContextmenu = (e: MouseEvent) => {
+		const { offsetX, offsetY } = e;
+		const { x, y } = relativeMousePos(offsetX, offsetY);
+
+		this.rectangleManager.onContextmenu(x, y);
+	};
+
 	public onMouseMove = (e: MouseEvent) => {
 		const { offsetX, offsetY } = e;
 		const { x, y } = relativeMousePos(offsetX, offsetY);
+
 		this.rectangleManager.onMouseMove(x, y);
 
 		if (get(this.$selectedTool) === 'move' && this.isTouch) {

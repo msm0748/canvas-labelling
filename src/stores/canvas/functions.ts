@@ -28,6 +28,78 @@ export const redo = () => {
 	canvasStore.history.redo();
 };
 
+/** element 뒤로 보내기 */
+export const bringForward = () => {
+	const selectedElement = get(canvasStore.selectedElement);
+	const elements = get(canvasStore.elements);
+	if (selectedElement) {
+		const index = elements.indexOf(selectedElement);
+		if (index < elements.length - 1) {
+			// index가 배열 길이보다 작은 경우에만 진행
+			const newElements = [
+				...elements.slice(0, index), // 선택된 다각형의 이전 요소들
+				elements[index + 1], // 선택된 다각형의 바로 다음 요소
+				elements[index], // 선택된 다각형
+				...elements.slice(index + 2) // 선택된 다각형의 이후 요소들
+			];
+
+			canvasStore.history.setState(newElements);
+		}
+	}
+};
+
+/** element 맨 뒤로 보내기 */
+export const bringToFront = () => {
+	const selectedElement = get(canvasStore.selectedElement);
+	const elements = get(canvasStore.elements);
+	if (selectedElement) {
+		const index = elements.indexOf(selectedElement);
+		const newElements = [
+			...elements.slice(0, index),
+			...elements.slice(index + 1),
+			elements[index]
+		];
+
+		canvasStore.history.setState(newElements);
+	}
+};
+
+/** element 앞으로 가져오기 */
+export const sendBackward = () => {
+	const selectedElement = get(canvasStore.selectedElement);
+	const elements = get(canvasStore.elements);
+	if (selectedElement) {
+		const index = elements.indexOf(selectedElement);
+		if (index > 0) {
+			// index가 0보다 큰 경우에만 진행
+			const newElements = [
+				...elements.slice(0, index - 1), // 선택된 다각형의 이전 요소들
+				elements[index], // 선택된 다각형
+				elements[index - 1], // 선택된 다각형의 바로 이전 요소
+				...elements.slice(index + 1) // 선택된 다각형의 이후 요소들
+			];
+
+			canvasStore.history.setState(newElements);
+		}
+	}
+};
+
+/** element 맨 앞으로 가져오기 */
+export const sendToBack = () => {
+	const selectedElement = get(canvasStore.selectedElement);
+	const elements = get(canvasStore.elements);
+	if (selectedElement) {
+		const index = elements.indexOf(selectedElement);
+		const newElements = [
+			elements[index], // 선택된 다각형을 맨 앞에 추가
+			...elements.slice(0, index),
+			...elements.slice(index + 1)
+		];
+
+		canvasStore.history.setState(newElements);
+	}
+};
+
 export const handleScaleChange = (newScale: number) => {
 	const oldScale = get(canvasStore.scale);
 	const viewPos = get(canvasStore.viewPos);

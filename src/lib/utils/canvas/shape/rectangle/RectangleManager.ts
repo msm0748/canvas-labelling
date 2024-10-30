@@ -86,6 +86,12 @@ export class RectangleManager extends BaseShapeManager {
 		}
 	}
 
+	public override onContextmenu(offsetX: number, offsetY: number) {
+		if (get(this.$selectedTool) === 'select') {
+			this.selectElement(offsetX, offsetY);
+		}
+	}
+
 	public override onMouseMove(offsetX: number, offsetY: number) {
 		const $elements = get(this.$elements);
 
