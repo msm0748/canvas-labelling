@@ -2,6 +2,7 @@ import { get } from 'svelte/store';
 import { canvasStore } from '$stores/canvas';
 import { RectangleManager } from './shape/rectangle/RectangleManager';
 import { relativeMousePos } from './common/mousePositionCalculator';
+import { INITIAL_POSITION } from '$lib/constants/canvas';
 
 export default class MouseController {
 	public ctx: CanvasRenderingContext2D;
@@ -9,6 +10,10 @@ export default class MouseController {
 	private static instance: MouseController | null = null;
 	private $scale = canvasStore.scale;
 	private $viewPos = canvasStore.viewPos;
+	private $selectedTool = canvasStore.selectedTool;
+
+	private startPos = INITIAL_POSITION;
+	private isTouch = false;
 
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
@@ -25,8 +30,12 @@ export default class MouseController {
 		const { offsetX, offsetY } = e;
 		const { x, y } = relativeMousePos(offsetX, offsetY);
 
-		// 왼쪽 마웃드 클릭시에만
+		// 왼쪽 마우스 클릭시에만
 		if (e.button === 0) {
+			if (get(this.$selectedTool) === 'move') {
+				this.startPos = { x: offsetX - get(this.$viewPos).x, y: offsetY - get(this.$viewPos).y };
+				this.isTouch = true;
+			}
 			this.rectangleManager.onMouseDown(x, y);
 		}
 	};
@@ -35,13 +44,16 @@ export default class MouseController {
 		const { offsetX, offsetY } = e;
 		const { x, y } = relativeMousePos(offsetX, offsetY);
 		this.rectangleManager.onMouseMove(x, y);
+
+		if (get(this.$selectedTool) === 'move' && this.isTouch) {
+			const { x: sX, y: sY } = this.startPos;
+			this.$viewPos.set({ x: offsetX - sX, y: offsetY - sY });
+		}
 	};
 
-	public onMouseUp = (e: MouseEvent) => {
-		// console.log(e);
-		// const { offsetX, offsetY } = e;
-		// const { x, y } = relativeMousePos(offsetX, offsetY);
+	public onMouseUp = () => {
 		this.rectangleManager.onMouseUp();
+		this.isTouch = false;
 	};
 
 	private canvasZoom(offsetX: number, offsetY: number, deltaY: number) {

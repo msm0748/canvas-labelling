@@ -22,6 +22,7 @@ export class RectangleManager extends BaseShapeManager {
 	}
 
 	protected override createElement(offsetX: number, offsetY: number) {
+		this.$selectedElement.reset();
 		const { label, color } = get(this.$selectedClass);
 		const element = new Rectangle(label, color);
 

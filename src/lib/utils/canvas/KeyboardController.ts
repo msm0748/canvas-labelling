@@ -6,7 +6,6 @@ import { get } from 'svelte/store';
 export default class KeyboardController {
 	private static instance: KeyboardController | null = null;
 	private $selectedTool = canvasStore.selectedTool;
-	private $selectedElement = canvasStore.selectedElement;
 	private beforeSelectedTool = INITIAL_SELECTED_TOOL;
 
 	constructor() {
