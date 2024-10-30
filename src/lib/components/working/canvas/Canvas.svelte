@@ -6,6 +6,7 @@
 	import MouseController from '$lib/utils/canvas/MouseController';
 	import Options from './options/Options.svelte';
 	import CanvasView from '$lib/utils/canvas/CanvasView';
+	import KeyboardController from '$lib/utils/canvas/KeyboardController';
 
 	export let imageSrc: string;
 
@@ -16,6 +17,7 @@
 
 	let mouseController: MouseController;
 	let canvasView: CanvasView;
+	let keyboardController = new KeyboardController();
 
 	let { imageInfo, canvasSize } = canvasStore;
 
@@ -59,6 +61,8 @@
 		if (canvasView) {
 			canvasView.destroy();
 		}
+
+		keyboardController.destroy();
 	});
 </script>
 
@@ -84,6 +88,8 @@
 		<Options />
 	</div>
 </div>
+
+<svelte:window on:keydown={keyboardController.onKeyDown} on:keyup={keyboardController.onKeyUp} />
 
 <style lang="scss">
 	.wrap {
