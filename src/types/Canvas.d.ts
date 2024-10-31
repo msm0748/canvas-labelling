@@ -10,10 +10,11 @@ export interface Position {
 	y: number;
 }
 
-export interface Classes {
+export interface ClassItem {
 	id: number;
-	projectId: string;
 	name: string;
+	color: string;
+	projectId: string;
 	createdAt: Date;
 }
 

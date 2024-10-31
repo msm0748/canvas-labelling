@@ -1,7 +1,17 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
+	import { canvasStore } from '$stores/canvas';
+	import type { ClassItem } from '$types/Canvas';
 
-	const classes = getContext('classes');
+	const classes: ClassItem[] = getContext('classes');
+
+	console.log(canvasStore);
+
+	const { selectedClass } = canvasStore;
+
+	$: if (classes) {
+		selectedClass.select(classes[0].id, classes[0].name, classes[0].color);
+	}
 </script>
 
 <div class="wrap">
@@ -10,10 +20,16 @@
 	<ul class="classList">
 		{#each classes as classItem}
 			<li class="classItem">
-				<div
-					style="width: 10px; height: 10px; background-color:{classItem.color}; border-radius: 3px;"
-				></div>
-				<div>{classItem.name}</div>
+				<button
+					on:click={() => {
+						selectedClass.select(classItem.id, classItem.name, classItem.color);
+					}}
+				>
+					<div
+						style="width: 10px; height: 10px; background-color:{classItem.color}; border-radius: 3px;"
+					></div>
+					<div>{classItem.name}</div>
+				</button>
 			</li>
 		{/each}
 	</ul>
@@ -43,7 +59,7 @@
 		height: 144px;
 		overflow-y: auto;
 
-		.classItem {
+		.classItem button {
 			display: flex;
 			align-items: center;
 			margin-bottom: 10px;
