@@ -31,16 +31,16 @@
 	bind:this={contextMenu}
 >
 	<ul>
-		<li><button on:click={() => handleAction(deleteElement)}>삭제</button></li>
-		<li><button on:click={() => handleAction(sendToBack)}>맨 뒤로</button></li>
-		<li><button on:click={() => handleAction(sendBackward)}>뒤로</button></li>
-		<li><button on:click={() => handleAction(bringForward)}>앞으로</button></li>
-		<li><button on:click={() => handleAction(bringToFront)}>맨 앞으로</button></li>
+		<li><button on:mousedown={() => handleAction(deleteElement)}>삭제</button></li>
+		<li><button on:mousedown={() => handleAction(sendToBack)}>맨 뒤로</button></li>
+		<li><button on:mousedown={() => handleAction(sendBackward)}>뒤로</button></li>
+		<li><button on:mousedown={() => handleAction(bringForward)}>앞으로</button></li>
+		<li><button on:mousedown={() => handleAction(bringToFront)}>맨 앞으로</button></li>
 	</ul>
 </div>
 
 <svelte:window
-	on:click={(e) => {
+	on:mousedown={(e) => {
 		if (e.target !== contextMenu) closeContextMenu();
 	}}
 />
