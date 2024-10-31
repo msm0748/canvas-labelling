@@ -125,6 +125,8 @@ export class RectangleManager extends BaseShapeManager {
 	}
 
 	public override onLeftMouseDown(offsetX: number, offsetY: number) {
+		this.startPos = { x: offsetX, y: offsetY };
+
 		switch (get(this.$selectedTool)) {
 			case 'rectangle':
 				if (this.action === 'none') {
@@ -188,7 +190,7 @@ export class RectangleManager extends BaseShapeManager {
 		}
 	}
 
-	public override onMouseUp() {
+	public override onMouseUp(offsetX: number, offsetY: number) {
 		const $elements = get(this.$elements);
 
 		switch (this.action) {
@@ -212,6 +214,10 @@ export class RectangleManager extends BaseShapeManager {
 			case 'moving':
 			case 'updating':
 				{
+					// 이동한 거리가 없으면 history에 안 쌓이게 break;
+					const { x: startX, y: startY } = this.startPos;
+					if (startX === offsetX && startY === offsetY) break;
+
 					const selectedElement = get(this.$selectedElement);
 					if (!selectedElement) return;
 

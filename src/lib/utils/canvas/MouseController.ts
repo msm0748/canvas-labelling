@@ -66,14 +66,18 @@ export default class MouseController {
 		}
 	};
 
-	public onMouseUp = () => {
+	public onMouseUp = (e: MouseEvent) => {
 		this.isTouch = false;
 		if (get(this.$selectedTool) === 'move') {
 			this.$mouseCursorStyle.set('grab');
 			// 도형을 그리는 중 캔버스를 이동할 때는 도형을 그리는 동작을 하지 않도록 return
 			return;
 		}
-		this.rectangleManager.onMouseUp();
+
+		const { offsetX, offsetY } = e;
+		const { x, y } = relativeMousePos(offsetX, offsetY);
+
+		this.rectangleManager.onMouseUp(x, y);
 	};
 
 	private canvasZoom(offsetX: number, offsetY: number, deltaY: number) {

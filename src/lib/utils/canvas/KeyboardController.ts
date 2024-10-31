@@ -22,7 +22,6 @@ export default class KeyboardController {
 
 		if (selectedTool !== 'move') {
 			this.beforeSelectedTool = selectedTool;
-			console.log(this.beforeSelectedTool);
 		}
 		this.$selectedTool.select('move');
 	};
