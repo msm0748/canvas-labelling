@@ -17,6 +17,65 @@ export class RectangleManager extends BaseShapeManager {
 		return { minX, minY, maxX, maxY };
 	}
 
+	private cursorForPosition = (position: string) => {
+		switch (position) {
+			case 'tl':
+			case 'br':
+				return 'nwse-resize';
+			case 'tr':
+			case 'bl':
+				return 'nesw-resize';
+			case 't':
+			case 'b':
+				return 'row-resize';
+			case 'l':
+			case 'r':
+				return 'col-resize';
+			default:
+				return 'move';
+		}
+	};
+
+	private setMouseCursorStyle(offsetX: number, offsetY: number) {
+		const selectedTool = get(this.$selectedTool);
+
+		if (selectedTool === 'move') return;
+		else if (selectedTool === 'rectangle') {
+			this.$mouseCursorStyle.set('crosshair');
+			return;
+		} else if (selectedTool === 'comment') {
+			this.$mouseCursorStyle.set('copy');
+			return;
+		}
+
+		const selectedElement = get(this.$selectedElement);
+
+		// 마지막에 추가된 Rect부터 선택하기 위해 reverse
+		const elements = [...get(this.$elements)].reverse();
+
+		for (const element of elements) {
+			const inside = element?.isPointInside(offsetX, offsetY);
+
+			if (selectedElement?.id === element.id) {
+				const position = element.positionWithinElement(offsetX, offsetY);
+
+				if (position) {
+					const cursor = this.cursorForPosition(position);
+					this.$mouseCursorStyle.set(cursor);
+					return;
+				}
+			}
+
+			if (inside) {
+				this.$mouseCursorStyle.set('move');
+
+				return;
+			}
+		}
+
+		this.$mouseCursorStyle.set('default');
+	}
+
 	protected override createElement(offsetX: number, offsetY: number) {
 		this.$selectedElement.reset();
 		const { label, color } = get(this.$selectedClass);
@@ -96,6 +155,8 @@ export class RectangleManager extends BaseShapeManager {
 
 	public override onMouseMove(offsetX: number, offsetY: number) {
 		const $elements = get(this.$elements);
+
+		this.setMouseCursorStyle(offsetX, offsetY);
 
 		switch (this.action) {
 			case 'drawing':

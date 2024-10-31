@@ -10,6 +10,7 @@ export default abstract class BaseShapeManager {
 	protected $selectedElement = canvasStore.selectedElement;
 	protected $elements = canvasStore.elements;
 	protected $history = canvasStore.history;
+	protected $mouseCursorStyle = canvasStore.mouseCursorStyle;
 
 	private historyUnsubscribe = this.$history.subscribe((state) => {
 		// console.log('구독');
