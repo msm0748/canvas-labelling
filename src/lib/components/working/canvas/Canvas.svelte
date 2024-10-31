@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { INITIAL_SIZE } from '$lib/constants/canvas';
+	import { INITIAL_POSITION, INITIAL_SIZE } from '$lib/constants/canvas';
 	import { onDestroy, onMount } from 'svelte';
 	import { adjustImageToCanvas } from '$lib/utils/canvas/common/adjustImageToCanvas';
 	import { canvasStore } from '$stores/canvas';
@@ -7,6 +7,8 @@
 	import Options from './options/Options.svelte';
 	import CanvasView from '$lib/utils/canvas/CanvasView';
 	import KeyboardController from '$lib/utils/canvas/KeyboardController';
+	import type { Position } from '$types/Canvas';
+	import ContextMenuOptions from './options/ContextMenuOptions.svelte';
 
 	export let imageSrc: string;
 
@@ -19,7 +21,19 @@
 	let canvasView: CanvasView;
 	let keyboardController = new KeyboardController();
 
-	let { imageInfo, canvasSize, mouseCursorStyle, selectedTool } = canvasStore;
+	let contextMenuPosition: Position = INITIAL_POSITION;
+	let isOpenContextMenu = false;
+
+	let { imageInfo, canvasSize, mouseCursorStyle, selectedTool, selectedElement } = canvasStore;
+
+	const handleContextmenuClick = (e: MouseEvent) => {
+		const { clientX, clientY } = e;
+		contextMenuPosition = { x: clientX, y: clientY };
+
+		if (!$selectedElement) return (isOpenContextMenu = false);
+
+		isOpenContextMenu = true;
+	};
 
 	/** 이미지 정보를 저장하는 함수 */
 	const setImage = (image: HTMLImageElement) => {
@@ -91,7 +105,7 @@
 		on:mousedown={mouseController.onMouseDown}
 		on:mousemove={mouseController.onMouseMove}
 		on:mouseup={mouseController.onMouseUp}
-		on:contextmenu|preventDefault
+		on:contextmenu|preventDefault={handleContextmenuClick}
 		on:wheel={mouseController.onMouseWheel}
 		tabindex="0"
 		role="button"
@@ -99,6 +113,9 @@
 	>
 		<canvas bind:this={canvas} width={size.width} height={size.height} />
 	</div>
+	{#if isOpenContextMenu}
+		<ContextMenuOptions position={contextMenuPosition} bind:isOpenContextMenu />
+	{/if}
 	<div class="option-control">
 		<Options />
 	</div>

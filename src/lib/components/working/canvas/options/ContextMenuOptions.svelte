@@ -11,6 +11,8 @@
 	export let position: Position;
 	export let isOpenContextMenu: boolean;
 
+	let contextMenu: HTMLDivElement;
+
 	const closeContextMenu = () => {
 		isOpenContextMenu = false;
 	};
@@ -21,7 +23,13 @@
 	};
 </script>
 
-<div class="context-menu" style="top: {position.y}px; left: {position.x}px;">
+<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions (because of reasons) -->
+<div
+	class="context-menu"
+	style="top: {position.y}px; left: {position.x}px;"
+	on:contextmenu|preventDefault
+	bind:this={contextMenu}
+>
 	<ul>
 		<li><button on:click={() => handleAction(deleteElement)}>삭제</button></li>
 		<li><button on:click={() => handleAction(sendToBack)}>맨 뒤로</button></li>
@@ -30,6 +38,12 @@
 		<li><button on:click={() => handleAction(bringToFront)}>맨 앞으로</button></li>
 	</ul>
 </div>
+
+<svelte:window
+	on:click={(e) => {
+		if (e.target !== contextMenu) closeContextMenu();
+	}}
+/>
 
 <style lang="scss">
 	.context-menu {

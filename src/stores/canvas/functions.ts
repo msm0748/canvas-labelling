@@ -9,6 +9,8 @@ export const deleteElement = () => {
 			(element) => element.id !== selectedElement.id
 		);
 		canvasStore.history.setState(newElements);
+
+		canvasStore.selectedElement.reset();
 	}
 };
 
@@ -44,6 +46,8 @@ export const bringForward = () => {
 			];
 
 			canvasStore.history.setState(newElements);
+
+			canvasStore.selectedElement.reset();
 		}
 	}
 };
@@ -61,6 +65,8 @@ export const bringToFront = () => {
 		];
 
 		canvasStore.history.setState(newElements);
+
+		canvasStore.selectedElement.reset();
 	}
 };
 
@@ -80,6 +86,8 @@ export const sendBackward = () => {
 			];
 
 			canvasStore.history.setState(newElements);
+
+			canvasStore.selectedElement.reset();
 		}
 	}
 };
@@ -97,6 +105,8 @@ export const sendToBack = () => {
 		];
 
 		canvasStore.history.setState(newElements);
+
+		canvasStore.selectedElement.reset();
 	}
 };
 
