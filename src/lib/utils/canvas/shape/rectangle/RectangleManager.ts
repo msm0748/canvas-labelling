@@ -65,7 +65,7 @@ export class RectangleManager extends BaseShapeManager {
 		this.action = 'none';
 	}
 
-	protected override handleLeftClick(offsetX: number, offsetY: number) {
+	public override onLeftMouseDown(offsetX: number, offsetY: number) {
 		switch (get(this.$selectedTool)) {
 			case 'rectangle':
 				if (this.action === 'none') {
@@ -82,7 +82,7 @@ export class RectangleManager extends BaseShapeManager {
 		}
 	}
 
-	protected override handleRightClick(offsetX: number, offsetY: number) {
+	public override onRightMouseDown(offsetX: number, offsetY: number) {
 		switch (get(this.$selectedTool)) {
 			case 'select':
 				this.selectElement(offsetX, offsetY);
@@ -91,16 +91,6 @@ export class RectangleManager extends BaseShapeManager {
 
 			default:
 				break;
-		}
-	}
-
-	public override onMouseDown(offsetX: number, offsetY: number, isContextmenu: boolean) {
-		if (isContextmenu) {
-			// 오른쪽 마우스 클릭시
-			this.handleRightClick(offsetX, offsetY);
-		} else {
-			// 왼쪽 마우스 클릭시
-			this.handleLeftClick(offsetX, offsetY);
 		}
 	}
 

@@ -29,9 +29,8 @@ export default abstract class BaseShapeManager {
 
 	protected abstract createElement(offsetX: number, offsetY: number): void;
 	protected abstract selectElement(offsetX: number, offsetY: number): void;
-	protected abstract handleLeftClick(offsetX: number, offsetY: number): void;
-	protected abstract handleRightClick(offsetX: number, offsetY: number): void;
-	public abstract onMouseDown(offsetX: number, offsetY: number, isContextmenu: boolean): void;
+	public abstract onLeftMouseDown(offsetX: number, offsetY: number): void;
+	public abstract onRightMouseDown(offsetX: number, offsetY: number): void;
 	public abstract onMouseMove(offsetX: number, offsetY: number): void;
 	public abstract onMouseUp(): void;
 

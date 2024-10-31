@@ -14,6 +14,7 @@ export default class MouseController {
 	private $mouseCursorStyle = canvasStore.mouseCursorStyle;
 
 	private startPos = INITIAL_POSITION;
+	/** 캔버스를 움직일 때 필요한 변수 */
 	private isTouch = false;
 
 	constructor(ctx: CanvasRenderingContext2D) {
@@ -37,6 +38,7 @@ export default class MouseController {
 
 		if (e.button === 1) return; // 마우스 휠 클릭시
 
+		/** 마우스 우클릭 여부 */
 		const isContextmenu = e.button === 2 ? true : false;
 
 		if (get(this.$selectedTool) === 'move') {
@@ -45,7 +47,11 @@ export default class MouseController {
 			this.$mouseCursorStyle.set('grabbing');
 		}
 
-		this.rectangleManager.onMouseDown(x, y, isContextmenu);
+		if (isContextmenu) {
+			this.rectangleManager.onRightMouseDown(x, y);
+		} else {
+			this.rectangleManager.onLeftMouseDown(x, y);
+		}
 	};
 
 	public onMouseMove = (e: MouseEvent) => {
@@ -61,11 +67,13 @@ export default class MouseController {
 	};
 
 	public onMouseUp = () => {
-		this.rectangleManager.onMouseUp();
 		this.isTouch = false;
 		if (get(this.$selectedTool) === 'move') {
 			this.$mouseCursorStyle.set('grab');
+			// 도형을 그리는 중 캔버스를 이동할 때는 도형을 그리는 동작을 하지 않도록 return
+			return;
 		}
+		this.rectangleManager.onMouseUp();
 	};
 
 	private canvasZoom(offsetX: number, offsetY: number, deltaY: number) {
