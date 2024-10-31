@@ -31,11 +31,11 @@
 	bind:this={contextMenu}
 >
 	<ul>
-		<li><button on:mousedown={() => handleAction(deleteElement)}>삭제</button></li>
-		<li><button on:mousedown={() => handleAction(sendToBack)}>맨 뒤로</button></li>
-		<li><button on:mousedown={() => handleAction(sendBackward)}>뒤로</button></li>
+		<li><button on:mousedown={() => handleAction(deleteElement)}>지우기</button></li>
 		<li><button on:mousedown={() => handleAction(bringForward)}>앞으로</button></li>
 		<li><button on:mousedown={() => handleAction(bringToFront)}>맨 앞으로</button></li>
+		<li><button on:mousedown={() => handleAction(sendBackward)}>뒤로</button></li>
+		<li><button on:mousedown={() => handleAction(sendToBack)}>맨 뒤로</button></li>
 	</ul>
 </div>
 
