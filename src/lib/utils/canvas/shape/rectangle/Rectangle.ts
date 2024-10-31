@@ -211,8 +211,17 @@ export class Rectangle extends BaseShape {
 		ctx.fillStyle = '#fff';
 		ctx.strokeStyle = this.hexToRgba(this.color, 0.3);
 		ctx.lineWidth = 1.2; // 원하는 선 두께로 조정
-		ctx.strokeText(this.label, this.points[0].x, this.points[0].y - 5);
-		ctx.fillText(this.label, this.points[0].x, this.points[0].y - 5);
+
+		// x와 y 값만을 담은 배열을 각각 생성
+		const xValues = this.points.map((point) => point.x);
+		const yValues = this.points.map((point) => point.y);
+
+		// 각각의 최소값을 계산
+		const minX = Math.min(...xValues);
+		const minY = Math.min(...yValues);
+
+		ctx.strokeText(this.label, minX, minY - 5);
+		ctx.fillText(this.label, minX, minY - 5);
 
 		// 확대 축소시 선 굵기와 포인트 크기를 일정하게 조정
 		this.resizePoint = INITIAL_RESIZE_POINT / get(this.$scale);

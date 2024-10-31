@@ -4,7 +4,7 @@
 
 	setContext('label', 'rectangle');
 
-	const imageSrc = '/test.png';
+	const imageSrc = '/test.webp';
 </script>
 
 <Canvas {imageSrc}></Canvas>
