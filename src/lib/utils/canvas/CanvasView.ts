@@ -3,7 +3,7 @@ import { canvasStore } from '$stores/canvas';
 import { get } from 'svelte/store';
 
 export default class CanvasView {
-	public ctx: CanvasRenderingContext2D;
+	private ctx: CanvasRenderingContext2D;
 	private animationFrameId: number | null = null;
 	private static instance: CanvasView | null = null;
 

@@ -18,7 +18,7 @@ export default class MouseController {
 
 	constructor(ctx: CanvasRenderingContext2D) {
 		this.ctx = ctx;
-		this.rectangleManager = new RectangleManager(ctx);
+		this.rectangleManager = new RectangleManager();
 
 		if (MouseController.instance) {
 			return MouseController.instance;
@@ -31,23 +31,21 @@ export default class MouseController {
 		const { offsetX, offsetY } = e;
 		const { x, y } = relativeMousePos(offsetX, offsetY);
 
-		// 왼쪽 마우스 클릭시에만
-		if (e.button === 0) {
-			if (get(this.$selectedTool) === 'move') {
-				this.startPos = { x: offsetX - get(this.$viewPos).x, y: offsetY - get(this.$viewPos).y };
-				this.isTouch = true;
+		// e.button === 0: 왼쪽 마우스 클릭시
+		// e.button === 1: 마우스 휠 클릭시
+		// e.button === 2: 오른쪽 마우스 클릭시
 
-				this.$mouseCursorStyle.set('grabbing');
-			}
-			this.rectangleManager.onMouseDown(x, y);
+		if (e.button === 1) return; // 마우스 휠 클릭시
+
+		const isContextmenu = e.button === 2 ? true : false;
+
+		if (get(this.$selectedTool) === 'move') {
+			this.startPos = { x: offsetX - get(this.$viewPos).x, y: offsetY - get(this.$viewPos).y };
+			this.isTouch = true;
+			this.$mouseCursorStyle.set('grabbing');
 		}
-	};
 
-	public onContextmenu = (e: MouseEvent) => {
-		const { offsetX, offsetY } = e;
-		const { x, y } = relativeMousePos(offsetX, offsetY);
-
-		this.rectangleManager.onContextmenu(x, y);
+		this.rectangleManager.onMouseDown(x, y, isContextmenu);
 	};
 
 	public onMouseMove = (e: MouseEvent) => {

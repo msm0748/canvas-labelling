@@ -4,17 +4,12 @@ import _ from 'lodash';
 import { get } from 'svelte/store';
 
 export default abstract class BaseShapeManager {
-	protected ctx: CanvasRenderingContext2D;
 	protected action: Action = 'none';
 	protected $selectedClass = canvasStore.selectedClass;
 	protected $selectedTool = canvasStore.selectedTool;
 	protected $selectedElement = canvasStore.selectedElement;
 	protected $elements = canvasStore.elements;
 	protected $history = canvasStore.history;
-
-	constructor(ctx: CanvasRenderingContext2D) {
-		this.ctx = ctx;
-	}
 
 	private historyUnsubscribe = this.$history.subscribe((state) => {
 		// console.log('구독');
@@ -34,8 +29,9 @@ export default abstract class BaseShapeManager {
 
 	protected abstract createElement(offsetX: number, offsetY: number): void;
 	protected abstract selectElement(offsetX: number, offsetY: number): void;
-	public abstract onMouseDown(offsetX: number, offsetY: number): void;
-	public abstract onContextmenu(offsetX: number, offsetY: number): void;
+	protected abstract handleLeftClick(offsetX: number, offsetY: number): void;
+	protected abstract handleRightClick(offsetX: number, offsetY: number): void;
+	public abstract onMouseDown(offsetX: number, offsetY: number, isContextmenu: boolean): void;
 	public abstract onMouseMove(offsetX: number, offsetY: number): void;
 	public abstract onMouseUp(): void;
 

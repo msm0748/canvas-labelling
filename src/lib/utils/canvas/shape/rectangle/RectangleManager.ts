@@ -4,10 +4,6 @@ import BaseShapeManager from '../../base/BaseShapeManager';
 import { updateElements } from '$stores/canvas/functions';
 
 export class RectangleManager extends BaseShapeManager {
-	constructor(ctx: CanvasRenderingContext2D) {
-		super(ctx);
-	}
-
 	/**
 	 * 그리는 순서에 상관없이 정확한 사각형의 경계값을 계산
 	 * ex) 왼쪽에서 오른쪽으로 그리는 경우, 오른쪽에서 왼쪽으로 그리는 경우
@@ -69,7 +65,7 @@ export class RectangleManager extends BaseShapeManager {
 		this.action = 'none';
 	}
 
-	public override onMouseDown(offsetX: number, offsetY: number) {
+	protected override handleLeftClick(offsetX: number, offsetY: number) {
 		switch (get(this.$selectedTool)) {
 			case 'rectangle':
 				if (this.action === 'none') {
@@ -86,9 +82,25 @@ export class RectangleManager extends BaseShapeManager {
 		}
 	}
 
-	public override onContextmenu(offsetX: number, offsetY: number) {
-		if (get(this.$selectedTool) === 'select') {
-			this.selectElement(offsetX, offsetY);
+	protected override handleRightClick(offsetX: number, offsetY: number) {
+		switch (get(this.$selectedTool)) {
+			case 'select':
+				this.selectElement(offsetX, offsetY);
+				this.action = 'none';
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	public override onMouseDown(offsetX: number, offsetY: number, isContextmenu: boolean) {
+		if (isContextmenu) {
+			// 오른쪽 마우스 클릭시
+			this.handleRightClick(offsetX, offsetY);
+		} else {
+			// 왼쪽 마우스 클릭시
+			this.handleLeftClick(offsetX, offsetY);
 		}
 	}
 

@@ -91,7 +91,7 @@
 		on:mousedown={mouseController.onMouseDown}
 		on:mousemove={mouseController.onMouseMove}
 		on:mouseup={mouseController.onMouseUp}
-		on:contextmenu|preventDefault={mouseController.onContextmenu}
+		on:contextmenu|preventDefault
 		on:wheel={mouseController.onMouseWheel}
 		tabindex="0"
 		role="button"
